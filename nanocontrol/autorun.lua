@@ -5,4 +5,4 @@
 -- This just exists to make the nanocontrol "nc" shorthand command function.
 
 shell = require("shell")
-shell.setAlias("nanocontrol","nc")
+shell.setAlias("nc","nanocontrol")

@@ -13,9 +13,6 @@ local CONNECT_TIME = 2
 local component = require("component")
 local term = require("term")
 local event = require("event")
-local shell = require("shell")
-
-shell.setAlias("nanocontrol","nc")
 
 local gpu = component.gpu
 if gpu == nil then error("NanoControl requires a GPU to function!") end
