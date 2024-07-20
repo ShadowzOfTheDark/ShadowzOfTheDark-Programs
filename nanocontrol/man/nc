@@ -1,0 +1,35 @@
+NAME
+  nc - shorthand alias for nanocontrol command
+  
+SYNOPSIS
+  nc COMMAND... [ARGUMENTS]...
+
+DESCRIPTION
+  Shorthand alias for nanocontrol command
+  
+  Will not exist until nanocontrol command is ran at least once
+   
+  If no command is given it will just open the GUI
+   
+COMMANDS
+  stop
+    Will turn off all nanomachine inputs individually
+	
+  off <[NAME] or all>
+    Will turn off provided effect group or all groups
+  
+  on [NAME]
+    Will turn on provided effect group
+	
+  help
+    Shows this manual entry
+  
+EXAMPLES
+  nc stop
+    Will turn off all nanomachine inputs
+
+  nc off all
+    Will turn off all found effect groups
+	
+  nc on nightvision
+    Would turn on nightvision if it's an effect that has been found
