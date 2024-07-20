@@ -18,6 +18,8 @@ SERVER.maxOutputs = 2
 SERVER.safeInputsActive = 2
 SERVER.triggerQuota = 0.4
 
+
+
 -- This just adds a shorthand 'nc' command with setup at boot.
 if require("rc").loaded.nanocontrol_alias == nil then
     print("Welcome to NanoControl!")
@@ -36,7 +38,10 @@ if command then
     command = string.lower(command)
     table.remove(commandArgs,1)
 
-    local func = loadfile(LIB_DIR..command..".lua")
+    local env = {}
+    setmetatable(env, {__index = _G})
+
+    local func = loadfile(LIB_DIR..command..".lua",nil,env)
     if func then
         func(table.unpack(commandArgs))
     else
