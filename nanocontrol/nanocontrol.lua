@@ -5,6 +5,8 @@
 -- Main program entry point
 
 local VER = {1,1,0}
+local VER_STR = string.format("v%i.%i.%i",VER[1],VER[2],VER[3])
+setmetatable(VER, {__tostring=function() return VER_STR end})
 local LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -18,16 +20,20 @@ SERVER.maxOutputs = 2
 SERVER.safeInputsActive = 2
 SERVER.triggerQuota = 0.4
 
-
+-- Custom enviroment for loaded libraries to have access to constants.
+local env = {VER=VER,LIB_DIR=LIB_DIR,SERVER=SERVER}
+setmetatable(env, {__index = _G})
 
 -- This just adds a shorthand 'nc' command with setup at boot.
 if require("rc").loaded.nanocontrol_alias == nil then
-    print("Welcome to NanoControl!")
+    print("Welcome to NanoControl "..VER.."!")
     print("Adding 'nc' shorthand alias for 'nanocontrol'.")
     local shell = require("shell")
     shell.execute("rc nanocontrol_alias enable")
     shell.execute("rc nanocontrol_alias start")
     os.sleep(3)
+else
+    print("Loading NanoControl ("..VER..")...")
 end
 
 -- Handler for shell commands.
@@ -37,9 +43,6 @@ local command = commandArgs[1]
 if command then
     command = string.lower(command)
     table.remove(commandArgs,1)
-
-    local env = {}
-    setmetatable(env, {__index = _G})
 
     local func = loadfile(LIB_DIR..command..".lua",nil,env)
     if func then
