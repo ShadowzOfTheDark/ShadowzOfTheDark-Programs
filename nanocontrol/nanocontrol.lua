@@ -2,7 +2,7 @@
 -- A program with GUI and commands to better control your nanomachines.
 -- https://github.com/ShadowzOfTheDark/ShadowzOfTheDark-Programs/nanomachines
 
-local VER = {1,0,5}
+local VER = {1,0,6}
 local DIR = "/nanomachines/"
 local port = 17061
 
@@ -13,6 +13,9 @@ local CONNECT_TIME = 2
 local component = require("component")
 local term = require("term")
 local event = require("event")
+local shell = require("shell")
+
+shell.execute("rc nanocontrol_alias enable")
 
 local gpu = component.gpu
 if gpu == nil then error("NanoControl requires a GPU to function!") end
@@ -25,7 +28,6 @@ if not modem.isWireless() then
     gpu.setForeground(0xFF0000)
     print("Detected a network card but isn't wireless. Trying anyway...")
     gpu.setForeground(0xFFFFFF)
-    os.sleep(2)
 end
 modem.open(port)
 
@@ -71,6 +73,8 @@ events.interrupted = function()
 end
 
 local function init()
+    print("Starting GUI...")
+    os.sleep(3)
     buffer = gpu.allocateBuffer(50,16)
     gpu.setResolution(50,16)
     gpu.setActiveBuffer(buffer)
