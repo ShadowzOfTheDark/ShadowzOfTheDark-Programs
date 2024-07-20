@@ -5,7 +5,7 @@
 -- Main program entry point
 
 local VER = {1,1,0}
-local BIN_DIR = "/nanocontrolbin/"
+local LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
 -- If your server has configs changed modify these to reflect that.
@@ -36,7 +36,7 @@ if command then
     command = string.lower(command)
     table.remove(commandArgs,1)
 
-    local func = loadfile(BIN_DIR..command..".lua")
+    local func = loadfile(LIB_DIR..command..".lua")
     if func then
         func(table.unpack(commandArgs))
     else
