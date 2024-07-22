@@ -6,6 +6,7 @@
 
 local math = require("math")
 local computer = require("computer")
+local event = require("event")
 
 local net_retry = {
     time=5,
