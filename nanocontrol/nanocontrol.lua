@@ -53,7 +53,7 @@ modem.open(NC.CFG.port)
 NC.modem = modem
 
 -- Function to link to nanomachines.
-local net_retry = require(NC.LIB_DIR.."net_retry.lua")
+local net_retry = require("net_retry")
 net_retry.time = NC.CFG.tryTime
 net_retry.wait = NC.CFG.waitTime
 net_retry.port = NC.CFG.port
