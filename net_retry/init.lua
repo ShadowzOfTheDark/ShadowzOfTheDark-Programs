@@ -5,6 +5,7 @@
 -- This library is designed to send a modem message out until a response.
 
 local math = require("math")
+local computer = require("computer")
 
 local net_retry = {
     time=5,
