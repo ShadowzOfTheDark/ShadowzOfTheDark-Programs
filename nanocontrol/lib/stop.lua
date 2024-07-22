@@ -4,4 +4,4 @@
 
 -- Stop command
 
-print("Stop command")
+print("Turning off all nanomachine inputs...")
