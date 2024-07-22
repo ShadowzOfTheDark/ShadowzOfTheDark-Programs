@@ -59,9 +59,17 @@ net_retry.wait = NC.CFG.waitTime
 net_retry.port = NC.CFG.port
 net_retry.modem = NC.modem
 
+--localAdr,remoteAdr,port,dist,...
+
+local function verify(port,dist,title)
+    return port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
+end
+
 NC.linkNanomachines = function()
-    net_retry.broadcastTry(function(...)
-        print(...)
+    return net_retry.broadcastTry(function(localAdr,remoteAdr,port,dist,title,cmd,response)
+        if verify(port,dist,title) and cmd == "port" and response == NC.CFG.port then
+            NC.address = remoteAdr
+        end
     end,"nanomachines","setResponsePort",NC.CFG.port)
 end
 
@@ -89,4 +97,9 @@ if gpu == nil then
 end
 NC.gpu = gpu
 
-NC.linkNanomachines()
+print("Establishing connection to nanomachines...")
+if NC.linkNanomachines() then
+    print("Found nanomachines: "..NC.address)
+else
+    io.stderr:write("Failed to connect to nanomachines. Are you sure you're close enough?")
+end
