@@ -69,6 +69,7 @@ NC.linkNanomachines = function()
     return net_retry.broadcastTry(function(localAdr,remoteAdr,port,dist,title,cmd,response)
         if verify(port,dist,title) and cmd == "port" and response == NC.CFG.port then
             NC.address = remoteAdr
+            return true
         end
     end,"nanomachines","setResponsePort",NC.CFG.port)
 end
