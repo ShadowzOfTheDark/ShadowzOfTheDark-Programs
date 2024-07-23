@@ -33,7 +33,7 @@ end
 net_retry.sendTry = function(adr,callback,...)
     local stop = computer.uptime() + net_retry.time
     while computer.uptime() < stop do
-        net_retry.modem.broadcast(adr,net_retry.port,...)
+        net_retry.modem.send(adr,net_retry.port,...)
         local time = math.min(stop-computer.uptime(),net_retry.wait)
         data = {event.pull(time,"modem_message")}
         if data[1] == "modem_message" then
