@@ -65,13 +65,25 @@ local function verify(port,dist,title)
     return port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
 end
 
+local function verifyAdr(adr,port,dist,title)
+    return adr == NC.address and port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
+end
+
 NC.linkNanomachines = function()
-    return net_retry.broadcastTry(function(localAdr,remoteAdr,port,dist,title,cmd,response)
+    net_retry.broadcastTry(function(localAdr,remoteAdr,port,dist,title,cmd,response)
         if verify(port,dist,title) and cmd == "port" and response == NC.CFG.port then
             NC.address = remoteAdr
             return true
         end
     end,"nanomachines","setResponsePort",NC.CFG.port)
+    if NC.address ~= nil then
+        return net_retry.sendTry(function(localAdr,remoteAdr,port,dist,title,cmd,response)
+            if verifyAdr(remoteAdr,port,dist,title) then
+                print(cmd,response)
+                return true
+            end
+        end,"nanomachines","getTotalInputCount")
+    end
 end
 
 -- Handler for shell commands.
@@ -101,6 +113,7 @@ NC.gpu = gpu
 print("Establishing connection to nanomachines...")
 if NC.linkNanomachines() then
     print("Found nanomachines: "..NC.address)
+    print("Port set to "..NC.CFG.port..".")
 else
     io.stderr:write("Failed to connect to nanomachines. Are you sure you're close enough?")
 end
