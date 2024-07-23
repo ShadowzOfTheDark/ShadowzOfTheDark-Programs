@@ -78,8 +78,8 @@ NC.linkNanomachines = function()
     end,"nanomachines","setResponsePort",NC.CFG.port)
     if NC.address ~= nil then
         return net_retry.sendTry(NC.address,function(localAdr,remoteAdr,port,dist,title,cmd,response)
-            if verifyAdr(remoteAdr,port,dist,title) then
-                print(cmd,response)
+            if verifyAdr(remoteAdr,port,dist,title) and cmd == "totalInputCount" then
+                NC.inputs = response
                 return true
             end
         end,"nanomachines","getTotalInputCount")
@@ -114,6 +114,7 @@ print("Establishing connection to nanomachines...")
 if NC.linkNanomachines() then
     print("Found nanomachines: "..NC.address)
     print("Port set to "..NC.CFG.port..".")
+    print("Detected "..NC.inputs.." inputs.")
 else
     io.stderr:write("Failed to connect to nanomachines. Are you sure you're close enough?")
 end
