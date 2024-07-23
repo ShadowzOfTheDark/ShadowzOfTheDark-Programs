@@ -77,7 +77,7 @@ NC.linkNanomachines = function()
         end
     end,"nanomachines","setResponsePort",NC.CFG.port)
     if NC.address ~= nil then
-        return net_retry.sendTry(function(localAdr,remoteAdr,port,dist,title,cmd,response)
+        return net_retry.sendTry(NC.address,function(localAdr,remoteAdr,port,dist,title,cmd,response)
             if verifyAdr(remoteAdr,port,dist,title) then
                 print(cmd,response)
                 return true
