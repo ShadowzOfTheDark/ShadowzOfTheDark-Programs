@@ -52,38 +52,12 @@ end
 modem.open(NC.CFG.port)
 NC.modem = modem
 
--- Function to link to nanomachines.
-local net_retry = require("net_retry")
-net_retry.time = NC.CFG.tryTime
-net_retry.wait = NC.CFG.waitTime
-net_retry.port = NC.CFG.port
-net_retry.modem = NC.modem
-
---localAdr,remoteAdr,port,dist,...
-
 local function verify(port,dist,title)
     return port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
 end
 
 local function verifyAdr(adr,port,dist,title)
     return adr == NC.address and port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
-end
-
-NC.linkNanomachines = function()
-    net_retry.broadcastTry(function(localAdr,remoteAdr,port,dist,title,cmd,response)
-        if verify(port,dist,title) and cmd == "port" and response == NC.CFG.port then
-            NC.address = remoteAdr
-            return true
-        end
-    end,"nanomachines","setResponsePort",NC.CFG.port)
-    if NC.address ~= nil then
-        return net_retry.sendTry(NC.address,function(localAdr,remoteAdr,port,dist,title,cmd,response)
-            if verifyAdr(remoteAdr,port,dist,title) and cmd == "totalInputCount" then
-                NC.inputs = response
-                return true
-            end
-        end,"nanomachines","getTotalInputCount")
-    end
 end
 
 -- Handler for shell commands.
@@ -103,23 +77,7 @@ if command then
     return false
 end
 
-print("Establishing connection to nanomachines...")
-if NC.linkNanomachines() then
-    print("Found nanomachines: "..NC.address)
-    print("Port set to "..NC.CFG.port..".")
-    print("Detected "..NC.inputs.." inputs.")
-else
-    io.stderr:write("Failed to connect to nanomachines. Are you sure you're close enough?")
-end
-
 local nanoGUI = require("nanocontrol/nanoGUI")
-
-NC.status = {}
-
-NC.status.adr = NC.address
-NC.status.name = "Shadman"
-NC.status.power = 109
-NC.status.powerMax = 1000
 
 nanoGUI.init(NC)
 

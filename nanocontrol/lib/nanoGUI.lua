@@ -92,6 +92,9 @@ events.interrupted = function()
     running = false
 end
 
+events.modem_message = function()
+end
+
 defaultButtons.exit = {
     xMin=48,xMax=50,yMin=1,yMax=1,
     render=function()
@@ -233,7 +236,7 @@ pages.inputs = {
 }
 
 pages.test = {
-    test = function() end
+    render = function() end
 }
 
 
