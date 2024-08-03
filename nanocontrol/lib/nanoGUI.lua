@@ -120,7 +120,7 @@ defaultButtons.status = {
 }
 
 defaultButtons.profiles = {
-    xMin=24,xMax=34,yMin=16,yMax=16,
+    xMin=11,xMax=20,yMin=16,yMax=16,
     render = function()
         if page == "profiles" then
             gpu.setBackground(colors.cyan,true)
