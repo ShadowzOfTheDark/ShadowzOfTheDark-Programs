@@ -56,7 +56,9 @@ local function setup()
     gpu.setActiveBuffer(buffer)
     drawTitle()
     drawButtons()
+    gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
+    gpu.setActiveBuffer(buffer)
     pushBuffer()
 end
 
