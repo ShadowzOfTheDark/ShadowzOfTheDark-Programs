@@ -157,21 +157,21 @@ defaultButtons.inputs = {
     end
 }
 
-defaultButtons.testing = {
-    xMin=31,xMax=39,yMin=16,yMax=16,
+defaultButtons.test = {
+    xMin=31,xMax=36,yMin=16,yMax=16,
     render = function()
-        if page == "testing" then
+        if page == "test" then
             gpu.setBackground(colors.cyan,true)
             gpu.setForeground(colors.white,true)
         else
             gpu.setBackground(colors.gray,true)
             gpu.setForeground(colors.silver,true)
         end
-        gpu.fill(31,16,9,1," ")
-        gpu.set(32,16,"Testing")
+        gpu.fill(31,16,6,1," ")
+        gpu.set(32,16,"Test")
     end,
     callback = function()
-        page = "testing"
+        page = "test"
         updateButtons = true
     end
 }
