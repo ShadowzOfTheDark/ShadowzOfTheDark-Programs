@@ -61,7 +61,7 @@ end
 local function drawPage()
     gpu.setBackground(colors.black,true)
     gpu.setForeground(colors.white,true)
-    gpu.fill(1,2,46,16," ")
+    gpu.fill(1,2,50,13," ")
     pages[page].render()
 end
 
@@ -223,6 +223,19 @@ pages.status = {
         setText(3,8,"Experience",NC.status.exp)
     end
 }
+
+pages.profiles = {
+    render = function() end
+}
+
+pages.inputs = {
+    render = function() end
+}
+
+pages.test = {
+    test = function() end
+}
+
 
 events.touch = function(adr,x,y,button)
     if adr == gpu.getScreen() then
