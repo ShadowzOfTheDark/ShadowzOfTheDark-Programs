@@ -13,6 +13,7 @@ local gpu, nativeW, nativeH
 local oldScreen
 local buffer
 local running = false
+local page = "status"
 
 local events = {}
 local defaultButtons = {}
@@ -83,7 +84,8 @@ defaultButtons.exit = {
     end,
     callback=function()
         running = false
-end}
+    end
+}
 
 defaultButtons.stop = {
     xMin=1,xMax=10,yMin=1,yMax=1,
@@ -93,6 +95,23 @@ defaultButtons.stop = {
         gpu.set(1,1,"STOP NANOS")
     end,
     callback = function()
+    end
+}
+
+defaultButtons.status = {
+    xMin=0,xMax=0,yMin=0,yMax=0,
+    render = function()
+        if page == "status" then
+            gpu.setBackground(0x202040)
+            gpu.setForeground(0xFFFFFF)
+        else
+            gpu.setBackground(0x202020)
+            gpu.setForeground(0xC0C0C0)
+        end
+        gpu.set(1,2,"Status")
+    end,
+    callback = function()
+        page = "status"
     end
 }
 
@@ -131,6 +150,7 @@ function nanoGUI.init(nanocontrol)
     nativeW, nativeH = gpu.getResolution()
     print("Starting GUI...")
     running = true
+    page = "status"
     currentButtons = tableCopy(defaultButtons)
     oldScreen = gpu.allocateBuffer(nativeW,nativeH)
     assert(oldScreen,"Invalid buffer. Out of VRAM? (1) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
