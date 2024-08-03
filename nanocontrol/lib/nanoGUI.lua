@@ -15,6 +15,7 @@ local oldScreen
 local buffer
 local running = false
 local page = "status"
+local updateButtons = false
 
 local events = {}
 local defaultButtons = {}
@@ -103,16 +104,17 @@ defaultButtons.status = {
     xMin=0,xMax=0,yMin=0,yMax=0,
     render = function()
         if page == "status" then
-            gpu.setBackground(colors.blue,true)
+            gpu.setBackground(colors.cyan,true)
             gpu.setForeground(colors.white,true)
         else
-            gpu.setBackground(colors.cyan,true)
+            gpu.setBackground(colors.gray,true)
             gpu.setForeground(colors.silver,true)
         end
         gpu.set(1,2,"Status")
     end,
     callback = function()
         page = "status"
+        updateButtons = true
     end
 }
 
@@ -120,16 +122,17 @@ defaultButtons.profiles = {
     xMin=0,xMax=0,yMin=0,yMax=0,
     render = function()
         if page == "profiles" then
-            gpu.setBackground(colors.blue,true)
+            gpu.setBackground(colors.cyan,true)
             gpu.setForeground(colors.white,true)
         else
-            gpu.setBackground(colors.cyan,true)
+            gpu.setBackground(colors.gray,true)
             gpu.setForeground(colors.silver,true)
         end
         gpu.set(25,2,"Profiles")
     end,
     callback = function()
         page = "profiles"
+        updateButtons = true
     end
 }
 
@@ -146,6 +149,10 @@ end
 local function main()
     setup()
     while true do
+        if updateButtons then
+            drawButtons()
+            pushBuffer()
+        end
         local eventData = {event.pull(1)}
         if eventData then
             local func = events[eventData[1]]
