@@ -20,10 +20,11 @@ events.interrupted = function()
 end
 
 local function pushBuffer()
-    gpu.bitblt(0,1,1,w,h,buffer,1,1)
+    gpu.bitblt(0,1,1,nativeW,nativeH,buffer,1,1)
 end
 
 local function drawTitle()
+    gpu.setActiveBuffer(buffer)
     gpu.setBackground(0x404040)
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1,1,50,1," ")
@@ -33,14 +34,13 @@ local function drawTitle()
     gpu.fill(48,1,3,1," ")
     gpu.fill(49,1,1,1,"X")
     gpu.set(1,1,"STOP NANOS")
+    gpu.setActiveBuffer(0)
 end
 
 local function setup()
     buffer = gpu.allocateBuffer(50,16)
-    gpu.setActiveBuffer(buffer)
     drawTitle()
     gpu.setResolution(50,16)
-    gpu.setActiveBuffer(buffer)
     pushBuffer()
 end
 
