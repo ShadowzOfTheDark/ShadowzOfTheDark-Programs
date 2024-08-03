@@ -21,7 +21,7 @@ events.interrupted = function()
 end
 
 local function pushBuffer()
-    gpu.bitblt(0,nil,nil,nil,nil,nil,buffer)
+    gpu.bitblt(0,nil,nil,nil,nil,buffer)
 end
 
 local function drawTitle()
@@ -76,7 +76,7 @@ nanoGUI.init = function(nanocontrol)
     end
     nativeW, nativeH = gpu.getResolution()
     print("Starting GUI...")
-    oldScreen = gpu.allocateBuffer(50,16)
+    oldScreen = gpu.allocateBuffer(nativeW,nativeH)
     gpu.bitblt(oldScreen,nil,nil,nil,nil,0)
     local succeed, err = pcall(main)
     reset()
