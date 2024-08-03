@@ -61,7 +61,7 @@ end
 local function drawPage()
     gpu.setBackground(colors.black,true)
     gpu.setForeground(colors.white,true)
-    gpu.fill(1,2,47,16," ")
+    gpu.fill(1,2,46,16," ")
     pages[page].render()
 end
 
@@ -194,14 +194,20 @@ defaultButtons.test = {
 
 pages.status = {
     render = function()
+        local toggle = true
         local function setText(x,y,txt,value)
             if value then
-                gpu.setForeground(colors.white,true)
+                if toggle then
+                    gpu.setForeground(colors.white,true)
+                else
+                    gpu.setForeground(colors.silver,true)
+                end
                 gpu.set(x,y,txt..value)
             else
-                gpu.setForeground(colors.silver,true)
+                gpu.setForeground(colors.gray,true)
                 gpu.set(x,y,txt)
             end
+            toggle = not toggle
         end
         setText(3,3,"Address: ",NC.status.adr)
         setText(3,4,"Player: ",NC.status.name)
