@@ -78,8 +78,8 @@ end
 defaultButtons.exit = {
     xMin=48,xMax=50,yMin=1,yMax=1,
     render=function()
-        gpu.setBackground(colors.red)
-        gpu.setForeground(colors.white)
+        gpu.setBackground(colors.red,true)
+        gpu.setForeground(colors.white,true)
         gpu.fill(48,1,3,1," ")
         gpu.fill(49,1,1,1,"X")
     end,
@@ -91,8 +91,8 @@ defaultButtons.exit = {
 defaultButtons.stop = {
     xMin=1,xMax=10,yMin=1,yMax=1,
     render=function()
-        gpu.setBackground(colors.red)
-        gpu.setForeground(colors.white)
+        gpu.setBackground(colors.red,true)
+        gpu.setForeground(colors.white,true)
         gpu.set(1,1,"STOP NANOS")
     end,
     callback = function()
@@ -103,11 +103,11 @@ defaultButtons.status = {
     xMin=0,xMax=0,yMin=0,yMax=0,
     render = function()
         if page == "status" then
-            gpu.setBackground(colors.blue)
-            gpu.setForeground(colors.white)
+            gpu.setBackground(colors.blue,true)
+            gpu.setForeground(colors.white,true)
         else
-            gpu.setBackground(colors.cyan)
-            gpu.setForeground(colors.silver)
+            gpu.setBackground(colors.cyan,true)
+            gpu.setForeground(colors.silver,true)
         end
         gpu.set(1,2,"Status")
     end,
@@ -120,11 +120,11 @@ defaultButtons.status = {
     xMin=0,xMax=0,yMin=0,yMax=0,
     render = function()
         if page == "status" then
-            gpu.setBackground(colors.blue)
-            gpu.setForeground(colors.white)
+            gpu.setBackground(colors.blue,true)
+            gpu.setForeground(colors.white,true)
         else
-            gpu.setBackground(colors.cyan)
-            gpu.setForeground(colors.silver)
+            gpu.setBackground(colors.cyan,true)
+            gpu.setForeground(colors.silver,true)
         end
         gpu.set(25,2,"Profiles")
     end,
