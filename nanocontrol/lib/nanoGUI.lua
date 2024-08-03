@@ -157,6 +157,25 @@ defaultButtons.inputs = {
     end
 }
 
+defaultButtons.testing = {
+    xMin=31,xMax=39,yMin=16,yMax=16,
+    render = function()
+        if page == "testing" then
+            gpu.setBackground(colors.cyan,true)
+            gpu.setForeground(colors.white,true)
+        else
+            gpu.setBackground(colors.gray,true)
+            gpu.setForeground(colors.silver,true)
+        end
+        gpu.fill(31,16,9,1," ")
+        gpu.set(32,16,"Testing")
+    end,
+    callback = function()
+        page = "testing"
+        updateButtons = true
+    end
+}
+
 events.touch = function(adr,x,y,button)
     if adr == gpu.getScreen() then
         for button, info in pairs(currentButtons) do
