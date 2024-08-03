@@ -6,6 +6,7 @@
 
 local component = require("component")
 local event = require("event")
+local colors = require("colors")
 
 local nanoGUI = {}
 local NC
@@ -37,8 +38,8 @@ local function pushBuffer()
 end
 
 local function drawTitle()
-    gpu.setBackground(0x404040)
-    gpu.setForeground(0xFFFFFF)
+    gpu.setBackground(colors.gray)
+    gpu.setForeground(colors.white)
     gpu.fill(1,1,50,1," ")
     local str = "NanoControl "..NC.VER
     gpu.set(25-(#str/2),1,str)
@@ -77,8 +78,8 @@ end
 defaultButtons.exit = {
     xMin=48,xMax=50,yMin=1,yMax=1,
     render=function()
-        gpu.setBackground(0xFF0000)
-        gpu.setForeground(0xFFFFFF)
+        gpu.setBackground(colors.red)
+        gpu.setForeground(colors.white)
         gpu.fill(48,1,3,1," ")
         gpu.fill(49,1,1,1,"X")
     end,
@@ -90,8 +91,8 @@ defaultButtons.exit = {
 defaultButtons.stop = {
     xMin=1,xMax=10,yMin=1,yMax=1,
     render=function()
-        gpu.setBackground(0xFF0000)
-        gpu.setForeground(0xFFFFFF)
+        gpu.setBackground(colors.red)
+        gpu.setForeground(colors.white)
         gpu.set(1,1,"STOP NANOS")
     end,
     callback = function()
@@ -102,13 +103,30 @@ defaultButtons.status = {
     xMin=0,xMax=0,yMin=0,yMax=0,
     render = function()
         if page == "status" then
-            gpu.setBackground(0x202040)
-            gpu.setForeground(0xFFFFFF)
+            gpu.setBackground(colors.blue)
+            gpu.setForeground(colors.white)
         else
-            gpu.setBackground(0x202020)
-            gpu.setForeground(0xC0C0C0)
+            gpu.setBackground(colors.cyan)
+            gpu.setForeground(colors.silver)
         end
         gpu.set(1,2,"Status")
+    end,
+    callback = function()
+        page = "status"
+    end
+}
+
+defaultButtons.status = {
+    xMin=0,xMax=0,yMin=0,yMax=0,
+    render = function()
+        if page == "status" then
+            gpu.setBackground(colors.blue)
+            gpu.setForeground(colors.white)
+        else
+            gpu.setBackground(colors.cyan)
+            gpu.setForeground(colors.silver)
+        end
+        gpu.set(25,2,"Profiles")
     end,
     callback = function()
         page = "status"
