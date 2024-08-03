@@ -41,7 +41,6 @@ local function drawTitle()
     gpu.fill(1,1,50,1," ")
     local str = "NanoControl "..NC.VER
     gpu.set(25-(#str/2),1,str)
-    gpu.set(1,1,"STOP NANOS")
 end
 
 local function drawButtons()
@@ -85,6 +84,17 @@ defaultButtons.exit = {
     callback=function()
         running = false
 end}
+
+defaultButtons.stop = {
+    xMin=1,xMax=10,yMin=1,yMax=1,
+    render=function()
+        gpu.setBackground(0xFF0000)
+        gpu.setForeground(0xFFFFFF)
+        gpu.set(1,1,"STOP NANOS")
+    end,
+    callback = function()
+    end
+}
 
 events.touch = function(adr,x,y,button)
     if adr == gpu.getScreen() then
