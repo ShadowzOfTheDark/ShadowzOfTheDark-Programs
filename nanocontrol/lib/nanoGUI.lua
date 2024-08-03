@@ -218,6 +218,9 @@ pages.status = {
                 setText(3,5,"Power: ",NC.status.power)
             end
         else setText(3,5,"Power: ") end
+        setText(3,6,"Health: ",NC.status.health)
+        setText(3,7,"Hunger: ",NC.status.hunger)
+        setText(3,8,"Experience",NC.status.exp)
     end
 }
 
