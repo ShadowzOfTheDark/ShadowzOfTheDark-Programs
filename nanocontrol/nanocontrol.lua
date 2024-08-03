@@ -116,7 +116,7 @@ local nanoGUI = require("nanocontrol/nanoGUI")
 
 NC.status = {}
 
-NC.status.adr = "98476297EFEFErawr-40274"
+NC.status.adr = NC.address
 NC.status.name = "Shadman"
 NC.status.power = 109
 NC.status.powerMax = 1000

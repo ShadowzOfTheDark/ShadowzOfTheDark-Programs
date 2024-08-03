@@ -191,9 +191,10 @@ defaultButtons.test = {
 
 pages.status = {
     render = function()
-        gpu.setBackground(colors.gray,true)
-        gpu.setForeground(colors.white)
-        gpu.fill(2,3,48,12," ")
+        gpu.setBackground(colors.black,true)
+        gpu.setForeground(colors.white,true)
+        gpu.fill(1,2,49,16," ")
+        gpu.set(2,3,"Address: "..NC.status.adr)
     end
 }
 
