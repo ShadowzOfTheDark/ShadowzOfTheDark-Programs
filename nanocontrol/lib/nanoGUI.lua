@@ -59,6 +59,9 @@ local function drawStatusIndicator(text)
 end
 
 local function drawPage()
+    gpu.setBackground(colors.black,true)
+    gpu.setForeground(colors.white,true)
+    gpu.fill(1,2,47,16," ")
     pages[page].render()
 end
 
@@ -191,10 +194,24 @@ defaultButtons.test = {
 
 pages.status = {
     render = function()
-        gpu.setBackground(colors.black,true)
-        gpu.setForeground(colors.white,true)
-        gpu.fill(1,2,49,16," ")
-        gpu.set(2,3,"Address: "..NC.status.adr)
+        local function setText(x,y,txt,value)
+            if value then
+                gpu.setForeground(colors.white,true)
+                gpu.set(x,y,txt..value)
+            else
+                gpu.setForeground(colors.silver,true)
+                gpu.set(x,y,txt)
+            end
+        end
+        setText(3,3,"Address: ",NC.status.adr)
+        setText(3,4,"Player: ",NC.status.name)
+        if NC.status.power then
+            if NC.status.powerMax then
+                setText(3,5,"",string.format("Power: %i/%i (%%%i)",NC.status.power,NC.status.powerMax,NC.status.power/NC.status.powerMax))
+            else
+                setText(3,5,"Power: ",NC.status.power)
+            end
+        else setText(3,5,"Power: ") end
     end
 }
 
