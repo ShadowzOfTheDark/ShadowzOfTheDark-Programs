@@ -17,7 +17,7 @@ end
 function start()
     local event = require("event")
     if not setAlias() then
-        ID = event.timer(1,function()
+        ID = event.timer(0.25,function()
             if setAlias() then
                 event.cancel(ID)
             end

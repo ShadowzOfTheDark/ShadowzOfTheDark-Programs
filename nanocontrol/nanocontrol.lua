@@ -52,6 +52,8 @@ end
 modem.open(NC.CFG.port)
 NC.modem = modem
 
+-- Communication handling
+
 local function verify(port,dist,title)
     return port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
 end
@@ -59,6 +61,8 @@ end
 local function verifyAdr(adr,port,dist,title)
     return adr == NC.address and port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
 end
+
+
 
 -- Handler for shell commands.
 local commandArgs = {...}
