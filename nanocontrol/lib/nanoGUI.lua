@@ -38,8 +38,8 @@ local function pushBuffer()
 end
 
 local function drawTitle()
-    gpu.setBackground(colors.gray)
-    gpu.setForeground(colors.white)
+    gpu.setBackground(colors.gray,true)
+    gpu.setForeground(colors.white,true)
     gpu.fill(1,1,50,1," ")
     local str = "NanoControl "..NC.VER
     gpu.set(25-(#str/2),1,str)
@@ -116,10 +116,10 @@ defaultButtons.status = {
     end
 }
 
-defaultButtons.status = {
+defaultButtons.profiles = {
     xMin=0,xMax=0,yMin=0,yMax=0,
     render = function()
-        if page == "status" then
+        if page == "profiles" then
             gpu.setBackground(colors.blue,true)
             gpu.setForeground(colors.white,true)
         else
@@ -129,7 +129,7 @@ defaultButtons.status = {
         gpu.set(25,2,"Profiles")
     end,
     callback = function()
-        page = "status"
+        page = "profiles"
     end
 }
 
