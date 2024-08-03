@@ -103,13 +103,6 @@ if command then
     return false
 end
 
-local gpu = component.gpu
-if gpu == nil then
-    io.stderr:write("NanoControl requires a GPU for GUI usage!\n")
-    return false
-end
-NC.gpu = gpu
-
 print("Establishing connection to nanomachines...")
 if NC.linkNanomachines() then
     print("Found nanomachines: "..NC.address)
@@ -121,7 +114,5 @@ end
 
 local nanoGUI = require("nanocontrol/nanoGUI")
 
-print("Starting GUI...")
-
-nanoGUI.init()
+nanoGUI.init(NC)
 
