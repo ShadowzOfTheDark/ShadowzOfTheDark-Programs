@@ -119,7 +119,9 @@ else
     io.stderr:write("Failed to connect to nanomachines. Are you sure you're close enough?")
 end
 
-local nanoGUI = require("nanoGUI")
+local nanoGUI = require("nanocontrol/nanoGUI")
 
 print("Starting GUI...")
+
+nanoGUI.init()
 
