@@ -21,6 +21,7 @@ local events = {}
 local defaultButtons = {}
 local buttons = {}
 local currentButtons
+local pages = {}
 
 local function tableCopy(t)
     local r = {}
@@ -57,6 +58,10 @@ local function drawStatusIndicator(text)
     gpu.set(49-#text,16,text)
 end
 
+local function drawPage()
+    pages[page].render()
+end
+
 local function setup()
     buffer = gpu.allocateBuffer(50,16)
     assert(buffer,"Invalid buffer. Out of VRAM? (2) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
@@ -65,7 +70,7 @@ local function setup()
     drawButtons()
     gpu.setBackground(colors.red,true)
     gpu.setForeground(colors.white,true)
-    drawStatusIndicator("Connected")
+    drawStatusIndicator("Searching")
     gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
     gpu.setActiveBuffer(buffer)
@@ -184,6 +189,14 @@ defaultButtons.test = {
     end
 }
 
+pages.status = {
+    render = function()
+        gpu.setBackground(colors.gray,true)
+        gpu.setForeground(colors.white)
+        gpu.fill(2,3,48,12," ")
+    end
+}
+
 events.touch = function(adr,x,y,button)
     if adr == gpu.getScreen() then
         for button, info in pairs(currentButtons) do
@@ -199,8 +212,9 @@ local function main()
     while true do
         if updateButtons then
             drawButtons()
-            pushBuffer()
         end
+        drawPage()
+        pushBuffer()
         local eventData = {event.pull(1)}
         if eventData then
             local func = events[eventData[1]]
