@@ -52,12 +52,20 @@ local function drawButtons()
     end
 end
 
+local function drawStatusIndicator(text)
+    gpu.fill(38,16,11,1," ")
+    gpu.set(49-#text,16,text)
+end
+
 local function setup()
     buffer = gpu.allocateBuffer(50,16)
     assert(buffer,"Invalid buffer. Out of VRAM? (2) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
     gpu.setActiveBuffer(buffer)
     drawTitle()
     drawButtons()
+    gpu.setBackground(colors.red)
+    gpu.setForeground(colors.white,true)
+    drawStatusIndicator("0123456")
     gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
     gpu.setActiveBuffer(buffer)
