@@ -207,7 +207,7 @@ pages.status = {
         setText(3,4,"Player: ",NC.status.name)
         if NC.status.power then
             if NC.status.powerMax then
-                setText(3,5,"",string.format("Power: %i/%i (%%%i)",NC.status.power,NC.status.powerMax,NC.status.power/NC.status.powerMax))
+                setText(3,5,"Power: ",string.format("%%%.1f (%.0f/%.0f)",NC.status.power/NC.status.powerMax*100,NC.status.power,NC.status.powerMax))
             else
                 setText(3,5,"Power: ",NC.status.power)
             end
