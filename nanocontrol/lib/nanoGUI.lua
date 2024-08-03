@@ -10,6 +10,7 @@ local event = require("event")
 local nanoGUI = {}
 local NC
 local gpu, nativeW, nativeH
+local oldScreen
 local buffer
 local running = true
 
@@ -20,7 +21,7 @@ events.interrupted = function()
 end
 
 local function pushBuffer()
-    gpu.bitblt(0,1,1,nativeW,nativeH,buffer,1,1)
+    gpu.bitblt(0,nil,nil,nil,nil,nil,buffer)
 end
 
 local function drawTitle()
@@ -48,6 +49,7 @@ local function reset()
     if buffer then gpu.freeBuffer(buffer) end
     gpu.setActiveBuffer(0)
     gpu.setResolution(nativeW,nativeH)
+    gpu.bitblt(0,nil,nil,nil,nil,oldScreen)
 end
 
 local function main()
@@ -74,6 +76,8 @@ nanoGUI.init = function(nanocontrol)
     end
     nativeW, nativeH = gpu.getResolution()
     print("Starting GUI...")
+    oldScreen = gpu.allocateBuffer(50,16)
+    gpu.bitblt(oldScreen,nil,nil,nil,nil,0)
     local succeed, err = pcall(main)
     reset()
     if not succeed then
