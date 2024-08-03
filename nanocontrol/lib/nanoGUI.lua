@@ -50,6 +50,7 @@ local function reset()
     gpu.setActiveBuffer(0)
     gpu.setResolution(nativeW,nativeH)
     gpu.bitblt(0,nil,nil,nil,nil,oldScreen)
+    gpu.freeBuffer(oldScreen)
 end
 
 local function main()
@@ -81,7 +82,7 @@ nanoGUI.init = function(nanocontrol)
     local succeed, err = pcall(main)
     reset()
     if not succeed then
-        error(err,2)
+        error(err,1)
     end
 end
 
