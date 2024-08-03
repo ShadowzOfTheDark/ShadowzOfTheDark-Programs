@@ -118,3 +118,5 @@ if NC.linkNanomachines() then
 else
     io.stderr:write("Failed to connect to nanomachines. Are you sure you're close enough?")
 end
+
+print("Starting GUI...")
