@@ -12,7 +12,7 @@ local NC
 local gpu, nativeW, nativeH
 local oldScreen
 local buffer
-local running = true
+local running = false
 
 local events = {}
 
@@ -40,6 +40,7 @@ end
 
 local function setup()
     buffer = gpu.allocateBuffer(50,16)
+    assert(buffer,"Invalid buffer. Out of VRAM? (2) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
     drawTitle()
     gpu.setResolution(50,16)
     pushBuffer()
@@ -50,7 +51,7 @@ local function reset()
     gpu.setActiveBuffer(0)
     gpu.setResolution(nativeW,nativeH)
     gpu.bitblt(0,nil,nil,nil,nil,oldScreen)
-    gpu.freeBuffer(oldScreen)
+    --gpu.freeBuffer(oldScreen)
 end
 
 local function main()
@@ -77,7 +78,9 @@ nanoGUI.init = function(nanocontrol)
     end
     nativeW, nativeH = gpu.getResolution()
     print("Starting GUI...")
+    running = true
     oldScreen = gpu.allocateBuffer(nativeW,nativeH)
+    assert(oldScreen,"Invalid buffer. Out of VRAM? (1) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
     gpu.bitblt(oldScreen,nil,nil,nil,nil,0)
     local succeed, err = pcall(main)
     reset()
