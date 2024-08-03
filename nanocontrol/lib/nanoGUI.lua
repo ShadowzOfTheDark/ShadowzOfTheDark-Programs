@@ -53,7 +53,7 @@ local function drawButtons()
 end
 
 local function drawStatusIndicator(text)
-    gpu.fill(38,16,11,1," ")
+    gpu.fill(38,16,13,1," ")
     gpu.set(49-#text,16,text)
 end
 
