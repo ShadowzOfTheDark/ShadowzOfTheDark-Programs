@@ -15,11 +15,8 @@ local buffer
 local running = false
 
 local events = {}
-
-local defaultButtons = {
-    exit = {xMin=48,xMax=50,yMin=1,yMax=1,callback=function() running = false end}
-}
-
+local defaultButtons
+local buttons
 local currentButtons
 
 local function tableCopy(t)
@@ -34,42 +31,31 @@ local function tableCopy(t)
     return r
 end
 
-events.interrupted = function()
-    running = false
-end
-
-events.touch = function(adr,x,y,button)
-    if adr == gpu.getScreen() then
-        for button, info in pairs(currentButtons) do
-            if x >= info.xMin and x <= info.xMax and y >= info.yMin and y <= info.yMax then
-                info.callback(button)
-            end
-        end
-    end
-end
-
 local function pushBuffer()
     gpu.bitblt(0,nil,nil,nil,nil,buffer)
 end
 
 local function drawTitle()
-    gpu.setActiveBuffer(buffer)
     gpu.setBackground(0x404040)
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1,1,50,1," ")
     local str = "NanoControl "..NC.VER
     gpu.set(25-(#str/2),1,str)
-    gpu.setBackground(0xFF0000)
-    gpu.fill(48,1,3,1," ")
-    gpu.fill(49,1,1,1,"X")
     gpu.set(1,1,"STOP NANOS")
-    gpu.setActiveBuffer(0)
+end
+
+local function drawButtons()
+    for k,v in pairs(currentButtons) do
+        v.render()
+    end
 end
 
 local function setup()
     buffer = gpu.allocateBuffer(50,16)
     assert(buffer,"Invalid buffer. Out of VRAM? (2) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
+    gpu.setActiveBuffer(buffer)
     drawTitle()
+    drawButtons()
     gpu.setResolution(50,16)
     pushBuffer()
 end
@@ -80,6 +66,32 @@ local function reset()
     gpu.setResolution(nativeW,nativeH)
     gpu.bitblt(0,nil,nil,nil,nil,oldScreen)
     gpu.freeBuffer(oldScreen)
+end
+
+events.interrupted = function()
+    running = false
+end
+
+defaultButtons.exit = {
+    xMin=48,xMax=50,yMin=1,yMax=1,
+    render=function()
+        gpu.setBackground(0xFF0000)
+        gpu.setForeground(0xFFFFFF)
+        gpu.fill(48,1,3,1," ")
+        gpu.fill(49,1,1,1,"X")
+    end,
+    callback=function()
+        running = false
+end}
+
+events.touch = function(adr,x,y,button)
+    if adr == gpu.getScreen() then
+        for button, info in pairs(currentButtons) do
+            if x >= info.xMin and x <= info.xMax and y >= info.yMin and y <= info.yMax then
+                info.callback(button)
+            end
+        end
+    end
 end
 
 local function main()
