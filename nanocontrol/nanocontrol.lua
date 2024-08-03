@@ -94,7 +94,7 @@ if command then
     command = string.lower(command)
     table.remove(commandArgs,1)
 
-    local func = loadfile(NC.LIB_DIR..command..".lua",nil,NC)
+    local func = loadfile(NC.LIB_DIR.."commands/"..command..".lua",nil,NC)
     if func then
         func(table.unpack(commandArgs))
     else
@@ -119,4 +119,7 @@ else
     io.stderr:write("Failed to connect to nanomachines. Are you sure you're close enough?")
 end
 
+local nanoGUI = require("nanoGUI")
+
 print("Starting GUI...")
+
