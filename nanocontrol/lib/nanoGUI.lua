@@ -16,14 +16,34 @@ local running = false
 
 local events = {}
 
+local defaultButtons = {
+    exit = {xMin=48,xMax=50,yMin=1,yMax=1,callback=function() running = false end}
+}
+
+local currentButtons
+
+local function tableCopy(t)
+    local r = {}
+    for k,v in pairs(t) do
+        if type(v) == "table" then
+            r[k] = tableCopy(v)
+        else
+            r[k] = v
+        end
+    end
+    return r
+end
+
 events.interrupted = function()
     running = false
 end
 
 events.touch = function(adr,x,y,button)
     if adr == gpu.getScreen() then
-        if x == 49 and y == 1 then
-            running = false
+        for button, info in pairs(currentButtons) do
+            if x >= info.xMin and x <= info.xMax and y >= info.yMin and y <= info.yMax then
+                info.callback(button)
+            end
         end
     end
 end
@@ -77,7 +97,7 @@ local function main()
     end
 end
 
-nanoGUI.init = function(nanocontrol)
+function nanoGUI.init(nanocontrol)
     NC = nanocontrol
     gpu = component.gpu
     if gpu == nil then
@@ -87,6 +107,7 @@ nanoGUI.init = function(nanocontrol)
     nativeW, nativeH = gpu.getResolution()
     print("Starting GUI...")
     running = true
+    currentButtons = tableCopy(defaultButtons)
     oldScreen = gpu.allocateBuffer(nativeW,nativeH)
     assert(oldScreen,"Invalid buffer. Out of VRAM? (1) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
     gpu.bitblt(oldScreen,nil,nil,nil,nil,0)
