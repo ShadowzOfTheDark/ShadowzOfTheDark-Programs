@@ -15,8 +15,8 @@ local buffer
 local running = false
 
 local events = {}
-local defaultButtons
-local buttons
+local defaultButtons = {}
+local buttons = {}
 local currentButtons
 
 local function tableCopy(t)
