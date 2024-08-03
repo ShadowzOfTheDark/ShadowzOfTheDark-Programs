@@ -101,7 +101,7 @@ defaultButtons.stop = {
 }
 
 defaultButtons.status = {
-    xMin=0,xMax=0,yMin=0,yMax=0,
+    xMin=1,xMax=9,yMin=2,yMax=2,
     render = function()
         if page == "status" then
             gpu.setBackground(colors.cyan,true)
@@ -110,7 +110,8 @@ defaultButtons.status = {
             gpu.setBackground(colors.gray,true)
             gpu.setForeground(colors.silver,true)
         end
-        gpu.set(1,2,"Status")
+        gpu.fill(1,2,8,1," ")
+        gpu.set(2,2,"Status")
     end,
     callback = function()
         page = "status"
@@ -119,7 +120,7 @@ defaultButtons.status = {
 }
 
 defaultButtons.profiles = {
-    xMin=0,xMax=0,yMin=0,yMax=0,
+    xMin=24,xMax=34,yMin=2,yMax=2,
     render = function()
         if page == "profiles" then
             gpu.setBackground(colors.cyan,true)
@@ -128,6 +129,7 @@ defaultButtons.profiles = {
             gpu.setBackground(colors.gray,true)
             gpu.setForeground(colors.silver,true)
         end
+        gpu.fill(24,2,10,1," ")
         gpu.set(25,2,"Profiles")
     end,
     callback = function()
