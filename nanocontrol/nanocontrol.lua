@@ -23,7 +23,7 @@ NC.SV.triggerQuota = 0.4
 
 NC.CFG = {}
 NC.CFG.port = 17061
-NC.CFG.timeout = 5 -- Time in seconds for nano connection to timeout.
+NC.CFG.timeout = 3 -- Time in seconds for nano connection to timeout.
 
 NC.Latency = NC.SV.commandDelay + 0.1
 
@@ -72,8 +72,8 @@ local queries = {"getTotalInputCount","getPowerState","getName","getAge","getHea
 local numQueries = #queries
 local queryIndex = 0
 
-local timeoutTime = computer.uptime() + NC.CFG.timeout
-local timedOut = false
+local timeoutTime = computer.uptime()
+local timedOut = true
 
 local function updateResponse(set)
     if set then
