@@ -215,13 +215,16 @@ pages.status = {
             end
             toggle = not toggle
         end
+        local function setDouble(x,y,txt,tbl)
+            setText(x,y,txt,tbl and string.format("%%%.1f (%.0f/%.0f)",tbl[1]/tbl[2]*100,tbl[1],tbl[2]))
+        end
         setText(3,3,"Address: ",NC.address)
         setText(3,4,"Total Inputs: ",NC.dat.totalInputCount)
-        setText(3,5,"Power: ",NC.dat.power and string.format("%%%.1f (%.0f/%.0f)",NC.dat.power[1]/NC.dat.power[2]*100,NC.dat.power[1],NC.dat.power[2]))
+        setDouble(3,5,"Power: ",NC.dat.power)
         setText(3,6,"Name: ",NC.dat.name)
         setText(3,7,"Age: ",NC.dat.age)
-        setText(3,8,"Health: ",NC.dat.health)
-        setText(3,9,"Hunger: ",NC.dat.hunger)
+        setDouble(3,8,"Health: ",NC.dat.health)
+        setDouble(3,9,"Hunger: ",NC.dat.hunger)
         setText(3,10,"Experience: ",NC.dat.experience)
     end
 }
