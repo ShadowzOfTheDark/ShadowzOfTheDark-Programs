@@ -201,31 +201,34 @@ defaultButtons.test = {
 pages.status = {
     render = function()
         local toggle = true
-        local function setText(x,y,txt,value)
+        local y = 3
+        local function setText(txt,value)
             if value then
                 if toggle then
                     gpu.setForeground(colors.white,true)
                 else
                     gpu.setForeground(colors.silver,true)
                 end
-                gpu.set(x,y,txt..value)
+                gpu.set(3,y,txt..value)
             else
                 gpu.setForeground(colors.gray,true)
-                gpu.set(x,y,txt)
+                gpu.set(3,y,txt)
             end
+            y = y + 1
             toggle = not toggle
         end
         local function setDouble(x,y,txt,tbl)
-            setText(x,y,txt,tbl and string.format("%%%.1f (%.0f/%.0f)",tbl[1]/tbl[2]*100,tbl[1],tbl[2]))
+            setText(txt,tbl and string.format("%%%.1f (%.0f/%.0f)",tbl[1]/tbl[2]*100,tbl[1],tbl[2]))
         end
-        setText(3,3,"Address: ",NC.address)
-        setText(3,4,"Total Inputs: ",NC.dat.totalInputCount)
-        setDouble(3,5,"Power: ",NC.dat.power)
-        setText(3,6,"Name: ",NC.dat.name)
-        setText(3,7,"Age: ",NC.dat.age)
-        setDouble(3,8,"Health: ",NC.dat.health)
-        setDouble(3,9,"Hunger: ",NC.dat.hunger)
-        setText(3,10,"Experience: ",NC.dat.experience)
+        setText("Address: ",NC.address)
+        setText("Total Inputs: ",NC.dat.totalInputCount)
+        setDouble("Power: ",NC.dat.power)
+        setText("Name: ",NC.dat.name)
+        setText("Age: ",NC.dat.age)
+        setDouble("Health: ",NC.dat.health)
+        setText("Hunger:",NC.dat.hunger and NC.dat.hunger[1])
+        setText("Saturation:",NC.dat.hunger and NC.dat.hunger[2])
+        setText("Experience: ",NC.dat.experience)
     end
 }
 
