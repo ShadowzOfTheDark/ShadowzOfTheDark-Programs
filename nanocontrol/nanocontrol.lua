@@ -23,6 +23,7 @@ NC.SV.triggerQuota = 0.4
 
 NC.CFG = {}
 NC.CFG.port = 17061
+NC.CFG.timeout = 5 -- Time in seconds for nano connection to timeout.
 
 NC.Latency = NC.SV.commandDelay + 0.1
 
@@ -67,6 +68,30 @@ end
 
 NC.dat = {}
 
+local queries = {"getTotalInputCount","getPowerState","getName","getAge","getHealth","getHunger","getExperience"}
+local numQueries = #queries
+local queryIndex = 0
+
+local timeoutTime = computer.uptime() + NC.CFG.timeout
+local timedOut = false
+
+local function updateResponse(set)
+    if set then
+        timeoutTime = computer.uptime() + NC.CFG.timeout
+        timedOut = false
+    else
+        if timeoutTime > computer.uptime() and not timedOut then
+            timedOut = true
+            NC.dat = {}
+            queryIndex = 0
+            if nanoGUI then
+                nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
+                nanoGUI.updateScreen = true
+            end
+        end
+    end
+end
+
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
     local args = table.pack(...)
@@ -77,7 +102,7 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
         if title == "port" and args[1] == NC.CFG.port then
             NC.address = adr
             if nanoGUI then
-                nanoGUI.drawStatusIndicator("Connected",0x33CC33,0xFFFFA5)
+                nanoGUI.drawStatusIndicator("Connected",0x33CC33,0xFFFFFF)
             end
         end
     end
@@ -90,11 +115,8 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     if nanoGUI then
         nanoGUI.updateScreen = true
     end
+    updateResponse(true)
 end
-
-local queries = {"getTotalInputCount","getPowerState","getName","getAge","getHealth","getHunger","getExperience"}
-local numQueries = #queries
-local queryIndex = 0
 
 NC.sendTime = computer.uptime()
 
