@@ -139,6 +139,7 @@ defaultButtons.status = {
     callback = function()
         page = "status"
         updateButtons = true
+        updateScreen = true
     end
 }
 
@@ -158,6 +159,7 @@ defaultButtons.profiles = {
     callback = function()
         page = "profiles"
         updateButtons = true
+        updateScreen = true
     end
 }
 
@@ -177,6 +179,7 @@ defaultButtons.inputs = {
     callback = function()
         page = "inputs"
         updateButtons = true
+        updateScreen = true
     end
 }
 
@@ -196,6 +199,7 @@ defaultButtons.test = {
     callback = function()
         page = "test"
         updateButtons = true
+        updateScreen = true
     end
 }
 
