@@ -83,6 +83,7 @@ local function updateResponse(set)
         if computer.uptime() > timeoutTime and not timedOut then
             timedOut = true
             NC.dat = {}
+            NC.address = nil
             queryIndex = 0
             if nanoGUI then
                 nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
