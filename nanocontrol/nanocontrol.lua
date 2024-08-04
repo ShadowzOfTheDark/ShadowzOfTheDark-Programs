@@ -93,11 +93,16 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
 end
 
 local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getName","getSafeActiveInputs","getMaxActiveInputs","getAge","getHealth","getHunger","getExperience"}
+local numQueries = #queries
+local queryIndex = 0
 
 function NC.update()
     if NC.address == nil or NC.port == nil then
         modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
+        return
     end
+    modem.send(NC.address,NC.CFG.port,"nanomachines",queries[queryIndex+1])
+    queryIndex = (queryIndex + 1) % numQueries
 end
 
 -- Handler for shell commands.

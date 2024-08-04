@@ -74,6 +74,7 @@ local function setup()
     gpu.setActiveBuffer(buffer)
     drawTitle()
     drawButtons()
+    drawPage()
     drawStatusIndicator("Searching",colors.red,colors.white)
     gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
@@ -246,10 +247,6 @@ end
 local function main()
     setup()
     while true do
-        NC.update()
-        if updateButtons then drawButtons() end
-        if updateScreen then drawPage() end
-        pushBuffer()
         local eventData = {event.pull(NC.Latency)}
         if eventData then
             local func = events[eventData[1]]
@@ -259,6 +256,10 @@ local function main()
             end
         end
         if not running then break end
+        NC.update()
+        if updateButtons then drawButtons() end
+        if updateScreen then drawPage() end
+        pushBuffer()
     end
 end
 
