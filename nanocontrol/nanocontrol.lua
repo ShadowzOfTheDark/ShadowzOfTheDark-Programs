@@ -69,7 +69,6 @@ NC.dat = {}
 
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
-    local update = false
     local args = table.pack(...)
     if NC.address and verifyAdr(adr,port,dist,delimiter) then
         verified = true
@@ -80,16 +79,15 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
             if nanoGUI then
                 nanoGUI.drawStatusIndicator("Connected",colors.lime,colors.white)
             end
-            update = true
         end
     end
-    if not verified then return update end
+    if not verified then return false end
     if #args > 1 then
         NC.dat[title] = args
     else
         NC.dat[title] = args[1]
     end
-    return update
+    return true
 end
 
 local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getName","getSafeActiveInputs","getMaxActiveInputs","getAge","getHealth","getHunger","getExperience"}
