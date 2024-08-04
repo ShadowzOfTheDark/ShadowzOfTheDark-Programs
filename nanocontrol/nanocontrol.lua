@@ -42,7 +42,7 @@ end
 
 -- Setting up hardware.
 local component = require("component")
-local os = require("os")
+local computer = require("computer")
 
 -- Setting up networking hardware.
 local modem = component.modem
@@ -96,11 +96,11 @@ local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getNam
 local numQueries = #queries
 local queryIndex = 0
 
-NC.sendTime = os.time()
+NC.sendTime = computer.uptime()
 
 function NC.update()
-    if os.time() > NC.sendTime then
-        NC.sendTime = os.time() + NC.Latency
+    if computer.uptime() > NC.sendTime then
+        NC.sendTime = computer.uptime() + NC.Latency
         if NC.address == nil or NC.dat.port == nil then
             modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
             return

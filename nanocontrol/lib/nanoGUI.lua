@@ -6,7 +6,7 @@
 
 local component = require("component")
 local event = require("event")
-local os = require("os")
+local computer = require("computer")
 
 local nanoGUI = {}
 local NC
@@ -259,7 +259,7 @@ end
 local function main()
     setup()
     while true do
-        local eventData = {event.pull(NC.sendTime-os.time())}
+        local eventData = {event.pull(NC.sendTime-computer.uptime())}
         if eventData then
             local func = events[eventData[1]]
             if func then
