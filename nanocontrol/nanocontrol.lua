@@ -130,6 +130,7 @@ function NC.update()
         modem.send(NC.address,NC.CFG.port,"nanomachines",queries[queryIndex+1])
         queryIndex = (queryIndex + 1) % numQueries
     end
+    updateResponse()
 end
 
 -- Handler for shell commands.
