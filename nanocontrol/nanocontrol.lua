@@ -68,6 +68,7 @@ end
 NC.dat = {}
 
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
+    NC.address = "Running"
     local verified = false
     local args = table.pack(...)
     if NC.address and verifyAdr(adr,port,dist,delimiter) then

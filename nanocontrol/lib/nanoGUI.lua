@@ -95,10 +95,6 @@ events.interrupted = function()
     running = false
 end
 
-local modem_message = function(...)
-    if NC.modem_message(...) then updateScreen = true end
-end
-
 defaultButtons.exit = {
     xMin=48,xMax=50,yMin=1,yMax=1,
     render=function()
@@ -263,8 +259,7 @@ end
 local function main()
     setup()
     while true do
-        --local eventData = {event.pull(NC.Latency)}
-        require("os").sleep(1.1)
+        local eventData = {event.pull(NC.Latency)}
         if eventData then
             local func = events[eventData[1]]
             if func then
@@ -289,7 +284,7 @@ function nanoGUI.init(nanocontrol)
     end
     nativeW, nativeH = gpu.getResolution()
     print("Starting GUI...")
-    event.listen("modem_message",modem_message)
+    event.listen("modem_message",NC.modem_message)
     running = true
     page = "status"
     currentButtons = tableCopy(defaultButtons)
@@ -299,7 +294,7 @@ function nanoGUI.init(nanocontrol)
     gpu.setDepth(gpu.maxDepth())
     local succeed, err = pcall(main)
     reset()
-    event.ignore("modem_message",modem_message)
+    event.ignore("modem_message",NC.modem_message)
     if not succeed then
         error(err)
     end
