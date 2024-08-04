@@ -85,6 +85,7 @@ end
 local function reset()
     if buffer then gpu.freeBuffer(buffer) end
     gpu.setActiveBuffer(0)
+    gpu.setDepth(4)
     gpu.setResolution(nativeW,nativeH)
     gpu.bitblt(0,nil,nil,nil,nil,oldScreen)
     gpu.freeBuffer(oldScreen)
@@ -226,8 +227,8 @@ pages.status = {
         setText("Name: ",NC.dat.name)
         setText("Age: ",NC.dat.age)
         setDouble("Health: ",NC.dat.health)
-        setText("Hunger:",NC.dat.hunger and NC.dat.hunger[1])
-        setText("Saturation:",NC.dat.hunger and NC.dat.hunger[2])
+        setText("Hunger: ",NC.dat.hunger and string.format("%.2f",NC.dat.hunger[1]))
+        setText("Saturation: ",NC.dat.hunger and string.format("%.2f",NC.dat.hunger[2]))
         setText("Experience: ",NC.dat.experience)
     end
 }
@@ -289,6 +290,7 @@ function nanoGUI.init(nanocontrol)
     oldScreen = gpu.allocateBuffer(nativeW,nativeH)
     assert(oldScreen,"Invalid buffer. Out of VRAM? (1) ("..gpu.freeMemory()/gpu.totalMemory().."% Left)")
     gpu.bitblt(oldScreen,nil,nil,nil,nil,0)
+    gpu.setDepth(gpu.maxDepth())
     local succeed, err = pcall(main)
     reset()
     if not succeed then
