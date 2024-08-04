@@ -217,7 +217,7 @@ pages.status = {
             y = y + 1
             toggle = not toggle
         end
-        local function setDouble(x,y,txt,tbl)
+        local function setDouble(txt,tbl)
             setText(txt,tbl and string.format("%%%.1f (%.0f/%.0f)",tbl[1]/tbl[2]*100,tbl[1],tbl[2]))
         end
         setText("Address: ",NC.address)
