@@ -16,6 +16,7 @@ local buffer
 local running = false
 local page = "status"
 local updateButtons = false
+local updateScreen = false
 
 local events = {}
 local defaultButtons = {}
@@ -93,7 +94,7 @@ events.interrupted = function()
 end
 
 events.modem_message = function(...)
-    NC.modem_message(...)
+    if NC.modem_message(...) then updateScreen = true end
 end
 
 defaultButtons.exit = {
@@ -244,10 +245,8 @@ local function main()
     setup()
     while true do
         NC.update()
-        if updateButtons then
-            drawButtons()
-        end
-        drawPage()
+        if updateButtons then drawButtons() end
+        if updateScreen then drawPage() end
         pushBuffer()
         local eventData = {event.pull(NC.Latency)}
         if eventData then

@@ -67,6 +67,7 @@ end
 
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
+    local update = false
     local args = table.pack(...)
     if NC.address and verifyAdr(adr,port,dist,delimiter) then
         verified = true
@@ -75,16 +76,18 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
         if title == "port" and args[1] == NC.CFG.port then
             NC.address = adr
             if nanoGUI then
-                nanoGUI.drawStatusIndicator("Connected",colors.green,colors.white)
+                nanoGUI.drawStatusIndicator("Connected",colors.lime,colors.white)
             end
+            update = true
         end
     end
-    if not verified then return false end
+    if not verified then return update end
     if #args > 1 then
         NC[title] = args
     else
         NC[title] = args[1]
     end
+    return update
 end
 
 function NC.update()
