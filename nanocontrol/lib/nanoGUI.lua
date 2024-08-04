@@ -284,7 +284,7 @@ function nanoGUI.init(nanocontrol)
     end
     nativeW, nativeH = gpu.getResolution()
     print("Starting GUI...")
-    event.listen("modem_message",NC.modem_message)
+    events.modem_message = NC.modem_message
     running = true
     page = "status"
     currentButtons = tableCopy(defaultButtons)
@@ -294,7 +294,6 @@ function nanoGUI.init(nanocontrol)
     gpu.setDepth(gpu.maxDepth())
     local succeed, err = pcall(main)
     reset()
-    event.ignore("modem_message",NC.modem_message)
     if not succeed then
         error(err)
     end
