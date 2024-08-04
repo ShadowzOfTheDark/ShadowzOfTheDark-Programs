@@ -53,7 +53,9 @@ local function drawButtons()
     end
 end
 
-local function drawStatusIndicator(text)
+local function drawStatusIndicator(text,back,fore)
+    gpu.setBackground(back,true)
+    gpu.setForeground(fore,true)
     gpu.fill(38,16,13,1," ")
     gpu.set(49-#text,16,text)
 end
@@ -71,9 +73,7 @@ local function setup()
     gpu.setActiveBuffer(buffer)
     drawTitle()
     drawButtons()
-    gpu.setBackground(colors.red,true)
-    gpu.setForeground(colors.white,true)
-    drawStatusIndicator("Searching")
+    drawStatusIndicator("Searching",colors.red,colors.white)
     gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
     gpu.setActiveBuffer(buffer)
