@@ -6,7 +6,7 @@
 
 local component = require("component")
 local event = require("event")
-local colors = require("colors")
+local os = require("os")
 
 local nanoGUI = {}
 local NC
@@ -259,7 +259,7 @@ end
 local function main()
     setup()
     while true do
-        local eventData = {event.pull(NC.Latency)}
+        local eventData = {event.pull(NC.sendTime-os.time())}
         if eventData then
             local func = events[eventData[1]]
             if func then

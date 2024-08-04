@@ -27,7 +27,6 @@ NC.CFG.port = 17061
 NC.Latency = NC.SV.commandDelay + 0.1
 
 local nanoGUI
-local colors = require("colors")
 
 -- This just adds a shorthand 'nc' command with setup at boot.
 if require("rc").loaded.nanocontrol_alias == nil then
@@ -43,6 +42,7 @@ end
 
 -- Setting up hardware.
 local component = require("component")
+local os = require("os")
 
 -- Setting up networking hardware.
 local modem = component.modem
@@ -96,13 +96,18 @@ local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getNam
 local numQueries = #queries
 local queryIndex = 0
 
+NC.sendTime = os.time()
+
 function NC.update()
-    if NC.address == nil or NC.dat.port == nil then
-        modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
-        return
+    if os.time() > NC.sendTime then
+        NC.sendTime = os.time() + NC.Latency
+        if NC.address == nil or NC.dat.port == nil then
+            modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
+            return
+        end
+        modem.send(NC.address,NC.CFG.port,"nanomachines",queries[queryIndex+1])
+        queryIndex = (queryIndex + 1) % numQueries
     end
-    modem.send(NC.address,NC.CFG.port,"nanomachines",queries[queryIndex+1])
-    queryIndex = (queryIndex + 1) % numQueries
 end
 
 -- Handler for shell commands.
