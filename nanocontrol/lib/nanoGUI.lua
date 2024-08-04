@@ -92,7 +92,8 @@ events.interrupted = function()
     running = false
 end
 
-events.modem_message = function()
+events.modem_message = function(...)
+    NC.modem_message(table.unpack(...))
 end
 
 defaultButtons.exit = {
@@ -212,18 +213,7 @@ pages.status = {
             end
             toggle = not toggle
         end
-        setText(3,3,"Address: ",NC.status.adr)
-        setText(3,4,"Player: ",NC.status.name)
-        if NC.status.power then
-            if NC.status.powerMax then
-                setText(3,5,"Power: ",string.format("%%%.1f (%.0f/%.0f)",NC.status.power/NC.status.powerMax*100,NC.status.power,NC.status.powerMax))
-            else
-                setText(3,5,"Power: ",NC.status.power)
-            end
-        else setText(3,5,"Power: ") end
-        setText(3,6,"Health: ",NC.status.health)
-        setText(3,7,"Hunger: ",NC.status.hunger)
-        setText(3,8,"Experience",NC.status.exp)
+        setText(3,3,"Address: ",NC.address)
     end
 }
 
@@ -258,7 +248,7 @@ local function main()
         end
         drawPage()
         pushBuffer()
-        local eventData = {event.pull(1)}
+        local eventData = {event.pull(NC.Latency)}
         if eventData then
             local func = events[eventData[1]]
             if func then
@@ -291,5 +281,7 @@ function nanoGUI.init(nanocontrol)
         error(err)
     end
 end
+
+nanoGUI.drawStatusIndicator = drawStatusIndicator
 
 return nanoGUI

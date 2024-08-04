@@ -22,9 +22,12 @@ NC.SV.safeInputsActive = 2
 NC.SV.triggerQuota = 0.4
 
 NC.CFG = {}
-NC.CFG.tryTime = NC.SV.commandDelay*3.75 -- This is how long the program will wait to get a response.
-NC.CFG.waitTime = NC.SV.commandDelay*1.25 -- This is how long the program will wait for a single response.
 NC.CFG.port = 17061
+
+NC.Latency = NC.SV.commandDelay + 0.1
+
+local nanoGUI
+local colors = require("colors")
 
 -- This just adds a shorthand 'nc' command with setup at boot.
 if require("rc").loaded.nanocontrol_alias == nil then
@@ -62,7 +65,35 @@ local function verifyAdr(adr,port,dist,title)
     return adr == NC.address and port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
 end
 
+local messages = {}
 
+function NC.modem_message(_,adr,port,dist,title,...)
+    local verified = false
+    local args = table.pack(...)
+    if NC.address and verifyAdr(adr,port,dist,title) then
+        verified = true
+    elseif verify(port,dist,title) then
+        verified = true
+        if title == "port" and args[1] == NC.CFG.port then
+            NC.address = adr
+            if nanoGUI then
+                nanoGUI.drawStatusIndicator("Connected",colors.green,colors.white)
+            end
+        end
+    end
+    if not verified then return false end
+    if #args > 1 then
+        NC[title] = args
+    else
+        NC[title] = args[1]
+    end
+end
+
+function NC.update()
+    if NC.address == nil or NC.port == nil then
+        modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
+    end
+end
 
 -- Handler for shell commands.
 local commandArgs = {...}
@@ -81,7 +112,7 @@ if command then
     return false
 end
 
-local nanoGUI = require("nanocontrol/nanoGUI")
+nanoGUI = require("nanocontrol/nanoGUI")
 
 nanoGUI.init(NC)
 
