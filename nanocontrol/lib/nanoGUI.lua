@@ -42,7 +42,7 @@ end
 
 local function drawTitle()
     gpu.setBackground(0x333333)
-    gpu.setForeground(0xFFFFA5)
+    gpu.setForeground(0xFFFFFF)
     gpu.fill(1,1,50,1," ")
     local str = "NanoControl "..NC.VER
     gpu.set(25-(#str/2),1,str)
@@ -63,7 +63,7 @@ end
 
 local function drawPage()
     gpu.setBackground(0x000000)
-    gpu.setForeground(0xFFFFA5)
+    gpu.setForeground(0xFFFFFF)
     gpu.fill(1,2,50,13," ")
     pages[page].render()
 end
@@ -75,7 +75,7 @@ local function setup()
     drawTitle()
     drawButtons()
     drawPage()
-    drawStatusIndicator("Searching",0xFF3333,0xFFFFA5)
+    drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
     gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
     gpu.setActiveBuffer(buffer)
@@ -99,7 +99,7 @@ defaultButtons.exit = {
     xMin=48,xMax=50,yMin=1,yMax=1,
     render=function()
         gpu.setBackground(0xFF3333)
-        gpu.setForeground(0xFFFFA5)
+        gpu.setForeground(0xFFFFFF)
         gpu.fill(48,1,3,1," ")
         gpu.fill(49,1,1,1,"X")
     end,
@@ -112,7 +112,7 @@ defaultButtons.stop = {
     xMin=1,xMax=10,yMin=1,yMax=1,
     render=function()
         gpu.setBackground(0xFF3333)
-        gpu.setForeground(0xFFFFA5)
+        gpu.setForeground(0xFFFFFF)
         gpu.set(1,1,"STOP NANOS")
     end,
     callback = function()
@@ -124,7 +124,7 @@ defaultButtons.status = {
     render = function()
         if page == "status" then
             gpu.setBackground(0x336699)
-            gpu.setForeground(0xFFFFA5)
+            gpu.setForeground(0xFFFFFF)
         else
             gpu.setBackground(0x333333)
             gpu.setForeground(0xCCCCCC)
@@ -144,7 +144,7 @@ defaultButtons.profiles = {
     render = function()
         if page == "profiles" then
             gpu.setBackground(0x336699)
-            gpu.setForeground(0xFFFFA5)
+            gpu.setForeground(0xFFFFFF)
         else
             gpu.setBackground(0x333333)
             gpu.setForeground(0xCCCCCC)
@@ -164,7 +164,7 @@ defaultButtons.inputs = {
     render = function()
         if page == "inputs" then
             gpu.setBackground(0x336699)
-            gpu.setForeground(0xFFFFA5)
+            gpu.setForeground(0xFFFFFF)
         else
             gpu.setBackground(0x333333)
             gpu.setForeground(0xCCCCCC)
@@ -184,7 +184,7 @@ defaultButtons.test = {
     render = function()
         if page == "test" then
             gpu.setBackground(0x336699)
-            gpu.setForeground(0xFFFFA5)
+            gpu.setForeground(0xFFFFFF)
         else
             gpu.setBackground(0x333333)
             gpu.setForeground(0xCCCCCC)
@@ -206,7 +206,7 @@ pages.status = {
         local function setText(txt,value)
             if value then
                 if toggle then
-                    gpu.setForeground(0xFFFFA5)
+                    gpu.setForeground(0xFFFFFF)
                 else
                     gpu.setForeground(0xCCCCCC)
                 end
