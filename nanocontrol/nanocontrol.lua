@@ -90,7 +90,7 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     return true
 end
 
-local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getName","getSafeActiveInputs","getMaxActiveInputs","getAge","getHealth","getHunger","getExperience"}
+local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getName","getAge","getHealth","getHunger","getExperience"}
 local numQueries = #queries
 local queryIndex = 0
 
