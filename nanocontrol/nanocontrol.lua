@@ -95,7 +95,7 @@ local numQueries = #queries
 local queryIndex = 0
 
 function NC.update()
-    if NC.address == nil or NC.port == nil then
+    if NC.address == nil or NC.dat.port == nil then
         modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
         return
     end
