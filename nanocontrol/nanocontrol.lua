@@ -81,13 +81,15 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
             end
         end
     end
-    if not verified then return false end
+    if not verified then return end
     if #args > 1 then
         NC.dat[title] = args
     else
         NC.dat[title] = args[1]
     end
-    return true
+    if nanoGUI then
+        nanoGUI.updateScreen = true
+    end
 end
 
 local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getName","getAge","getHealth","getHunger","getExperience"}

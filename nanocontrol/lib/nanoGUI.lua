@@ -16,7 +16,7 @@ local buffer
 local running = false
 local page = "status"
 local updateButtons = false
-local updateScreen = false
+nanoGUI.updateScreen = false
 
 local events = {}
 local defaultButtons = {}
@@ -135,7 +135,7 @@ defaultButtons.status = {
     callback = function()
         page = "status"
         updateButtons = true
-        updateScreen = true
+        nanoGUI.updateScreen = true
     end
 }
 
@@ -155,7 +155,7 @@ defaultButtons.profiles = {
     callback = function()
         page = "profiles"
         updateButtons = true
-        updateScreen = true
+        nanoGUI.updateScreen = true
     end
 }
 
@@ -175,7 +175,7 @@ defaultButtons.inputs = {
     callback = function()
         page = "inputs"
         updateButtons = true
-        updateScreen = true
+        nanoGUI.updateScreen = true
     end
 }
 
@@ -195,7 +195,7 @@ defaultButtons.test = {
     callback = function()
         page = "test"
         updateButtons = true
-        updateScreen = true
+        nanoGUI.updateScreen = true
     end
 }
 
@@ -270,7 +270,7 @@ local function main()
         if not running then break end
         NC.update()
         if updateButtons then drawButtons() end
-        if updateScreen then drawPage() end
+        if nanoGUI.updateScreen then drawPage() end
         pushBuffer()
     end
 end
