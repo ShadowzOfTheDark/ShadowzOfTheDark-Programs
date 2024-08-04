@@ -80,7 +80,7 @@ local function updateResponse(set)
         timeoutTime = computer.uptime() + NC.CFG.timeout
         timedOut = false
     else
-        if timeoutTime > computer.uptime() and not timedOut then
+        if computer.uptime() > timeoutTime and not timedOut then
             timedOut = true
             NC.dat = {}
             queryIndex = 0
