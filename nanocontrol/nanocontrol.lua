@@ -65,6 +65,8 @@ local function verifyAdr(adr,port,dist,delimiter)
     return adr == NC.address and port == NC.CFG.port and dist < NC.SV.commandRange and delimiter == "nanomachines"
 end
 
+NC.dat = {}
+
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
     local update = false
@@ -83,12 +85,14 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     end
     if not verified then return update end
     if #args > 1 then
-        NC[title] = args
+        NC.dat[title] = args
     else
-        NC[title] = args[1]
+        NC.dat[title] = args[1]
     end
     return update
 end
+
+local queries = {"getTotalInputCount","getActiveEffects","getPowerState","getName","getSafeActiveInputs","getMaxActiveInputs","getAge","getHealth","getHunger","getExperience"}
 
 function NC.update()
     if NC.address == nil or NC.port == nil then

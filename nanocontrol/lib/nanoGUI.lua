@@ -215,6 +215,8 @@ pages.status = {
             toggle = not toggle
         end
         setText(3,3,"Address: ",NC.address)
+        setText(3,4,"Total Inputs: ",NC.dat.totalInputCount)
+        setText(3,5,"Power: ",NC.dat.power and string.format("%%%.1f (%.0f/%.0f)",NC.dat.power[1]/NC.dat.power[2],NC.dat.power[1],NC.dat.power[2]))
     end
 }
 
