@@ -263,7 +263,8 @@ end
 local function main()
     setup()
     while true do
-        local eventData = {event.pull(NC.Latency)}
+        --local eventData = {event.pull(NC.Latency)}
+        require("os").sleep(1.1)
         if eventData then
             local func = events[eventData[1]]
             if func then
