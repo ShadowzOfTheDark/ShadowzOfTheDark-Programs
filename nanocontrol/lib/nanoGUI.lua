@@ -41,8 +41,8 @@ local function pushBuffer()
 end
 
 local function drawTitle()
-    gpu.setBackground(colors.gray,true)
-    gpu.setForeground(colors.white,true)
+    gpu.setBackground(0x333333)
+    gpu.setForeground(0xFFFFA5)
     gpu.fill(1,1,50,1," ")
     local str = "NanoControl "..NC.VER
     gpu.set(25-(#str/2),1,str)
@@ -55,15 +55,15 @@ local function drawButtons()
 end
 
 local function drawStatusIndicator(text,back,fore)
-    gpu.setBackground(back,true)
-    gpu.setForeground(fore,true)
+    gpu.setBackground(back)
+    gpu.setForeground(fore)
     gpu.fill(38,16,13,1," ")
     gpu.set(49-#text,16,text)
 end
 
 local function drawPage()
-    gpu.setBackground(colors.black,true)
-    gpu.setForeground(colors.white,true)
+    gpu.setBackground(0x000000)
+    gpu.setForeground(0xFFFFA5)
     gpu.fill(1,2,50,13," ")
     pages[page].render()
 end
@@ -102,8 +102,8 @@ end
 defaultButtons.exit = {
     xMin=48,xMax=50,yMin=1,yMax=1,
     render=function()
-        gpu.setBackground(colors.red,true)
-        gpu.setForeground(colors.white,true)
+        gpu.setBackground(0xFF3333)
+        gpu.setForeground(0xFFFFA5)
         gpu.fill(48,1,3,1," ")
         gpu.fill(49,1,1,1,"X")
     end,
@@ -115,8 +115,8 @@ defaultButtons.exit = {
 defaultButtons.stop = {
     xMin=1,xMax=10,yMin=1,yMax=1,
     render=function()
-        gpu.setBackground(colors.red,true)
-        gpu.setForeground(colors.white,true)
+        gpu.setBackground(0xFF3333)
+        gpu.setForeground(0xFFFFA5)
         gpu.set(1,1,"STOP NANOS")
     end,
     callback = function()
@@ -127,11 +127,11 @@ defaultButtons.status = {
     xMin=2,xMax=9,yMin=16,yMax=16,
     render = function()
         if page == "status" then
-            gpu.setBackground(colors.cyan,true)
-            gpu.setForeground(colors.white,true)
+            gpu.setBackground(0x336699)
+            gpu.setForeground(0xFFFFA5)
         else
-            gpu.setBackground(colors.gray,true)
-            gpu.setForeground(colors.silver,true)
+            gpu.setBackground(0x333333)
+            gpu.setForeground(0xCCCCCC)
         end
         gpu.fill(2,16,8,1," ")
         gpu.set(3,16,"Status")
@@ -146,11 +146,11 @@ defaultButtons.profiles = {
     xMin=11,xMax=20,yMin=16,yMax=16,
     render = function()
         if page == "profiles" then
-            gpu.setBackground(colors.cyan,true)
-            gpu.setForeground(colors.white,true)
+            gpu.setBackground(0x336699)
+            gpu.setForeground(0xFFFFA5)
         else
-            gpu.setBackground(colors.gray,true)
-            gpu.setForeground(colors.silver,true)
+            gpu.setBackground(0x333333)
+            gpu.setForeground(0xCCCCCC)
         end
         gpu.fill(11,16,10,1," ")
         gpu.set(12,16,"Profiles")
@@ -165,11 +165,11 @@ defaultButtons.inputs = {
     xMin=22,xMax=29,yMin=16,yMax=16,
     render = function()
         if page == "inputs" then
-            gpu.setBackground(colors.cyan,true)
-            gpu.setForeground(colors.white,true)
+            gpu.setBackground(0x336699)
+            gpu.setForeground(0xFFFFA5)
         else
-            gpu.setBackground(colors.gray,true)
-            gpu.setForeground(colors.silver,true)
+            gpu.setBackground(0x333333)
+            gpu.setForeground(0xCCCCCC)
         end
         gpu.fill(22,16,8,1," ")
         gpu.set(23,16,"Inputs")
@@ -184,11 +184,11 @@ defaultButtons.test = {
     xMin=31,xMax=36,yMin=16,yMax=16,
     render = function()
         if page == "test" then
-            gpu.setBackground(colors.cyan,true)
-            gpu.setForeground(colors.white,true)
+            gpu.setBackground(0x336699)
+            gpu.setForeground(0xFFFFA5)
         else
-            gpu.setBackground(colors.gray,true)
-            gpu.setForeground(colors.silver,true)
+            gpu.setBackground(0x333333)
+            gpu.setForeground(0xCCCCCC)
         end
         gpu.fill(31,16,6,1," ")
         gpu.set(32,16,"Test")
@@ -206,13 +206,13 @@ pages.status = {
         local function setText(txt,value)
             if value then
                 if toggle then
-                    gpu.setForeground(colors.white,true)
+                    gpu.setForeground(0xFFFFA5)
                 else
-                    gpu.setForeground(colors.silver,true)
+                    gpu.setForeground(0xCCCCCC)
                 end
                 gpu.set(3,y,txt..value)
             else
-                gpu.setForeground(colors.gray,true)
+                gpu.setForeground(0x333333)
                 gpu.set(3,y,txt)
             end
             y = y + 1

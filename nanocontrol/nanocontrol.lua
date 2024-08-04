@@ -77,7 +77,7 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
         if title == "port" and args[1] == NC.CFG.port then
             NC.address = adr
             if nanoGUI then
-                nanoGUI.drawStatusIndicator("Connected",colors.lime,colors.white)
+                nanoGUI.drawStatusIndicator("Connected",0x33CC33,0xFFFFA5)
             end
         end
     end
