@@ -89,6 +89,7 @@ local function updateResponse(set)
                 nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
                 nanoGUI.updateScreen = true
             end
+            computer.beep(500,0.25)
         end
     end
 end
@@ -102,6 +103,7 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
         verified = true
         if title == "port" and args[1] == NC.CFG.port then
             NC.address = adr
+            computer.beep(1000,0.25)
             if nanoGUI then
                 nanoGUI.drawStatusIndicator("Connected",0x33CC33,0xFFFFFF)
             end
