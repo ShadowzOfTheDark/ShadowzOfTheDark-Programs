@@ -57,22 +57,20 @@ NC.modem = modem
 
 -- Communication handling
 
-local function verify(port,dist,title)
-    return port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
+local function verify(port,dist,delimiter)
+    return port == NC.CFG.port and dist < NC.SV.commandRange and delimiter == "nanomachines"
 end
 
-local function verifyAdr(adr,port,dist,title)
-    return adr == NC.address and port == NC.CFG.port and dist < NC.SV.commandRange and title == "nanomachines"
+local function verifyAdr(adr,port,dist,delimiter)
+    return adr == NC.address and port == NC.CFG.port and dist < NC.SV.commandRange and delimiter == "nanomachines"
 end
 
-local messages = {}
-
-function NC.modem_message(_,adr,port,dist,title,...)
+function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
     local args = table.pack(...)
-    if NC.address and verifyAdr(adr,port,dist,title) then
+    if NC.address and verifyAdr(adr,port,dist,delimiter) then
         verified = true
-    elseif verify(port,dist,title) then
+    elseif verify(port,dist,delimiter) then
         verified = true
         if title == "port" and args[1] == NC.CFG.port then
             NC.address = adr

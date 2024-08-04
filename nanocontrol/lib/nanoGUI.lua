@@ -93,7 +93,7 @@ events.interrupted = function()
 end
 
 events.modem_message = function(...)
-    NC.modem_message(table.unpack(...))
+    NC.modem_message(...)
 end
 
 defaultButtons.exit = {
@@ -243,6 +243,7 @@ end
 local function main()
     setup()
     while true do
+        NC.update()
         if updateButtons then
             drawButtons()
         end
