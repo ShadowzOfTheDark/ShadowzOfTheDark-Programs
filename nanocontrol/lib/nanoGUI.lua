@@ -239,15 +239,17 @@ pages.status = {
         setText("Experience: ",NC.dat.experience)
     end,
     buttons = {
-        xMin=1,xMax=1,yMin=7,yMax=8,
-        render=function()
-            gpu.setBackground(0x333333)
-            gpu.setForeground(0xCCCCCC)
-            gpu.fill(1,7,1,2,"<")
-        end,
-        callback = function()
+        {
+            xMin=1,xMax=1,yMin=7,yMax=8,
+            render=function()
+                gpu.setBackground(0x333333)
+                gpu.setForeground(0xCCCCCC)
+                gpu.fill(1,7,1,2,"<")
+            end,
+            callback = function()
 
-        end
+            end
+        }
     }
 }
 
