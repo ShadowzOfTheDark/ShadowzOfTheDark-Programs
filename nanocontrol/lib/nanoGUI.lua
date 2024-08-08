@@ -244,10 +244,11 @@ pages.status = {
             render=function()
                 gpu.setBackground(0x333333)
                 gpu.setForeground(0xCCCCCC)
-                gpu.fill(1,7,1,2,"<")
+                gpu.fill(1,7,1,1,"/")
+                gpu.fill(1,8,1,1,"\\")
             end,
             callback = function()
-
+                require("computer").beep()
             end
         }
     }
