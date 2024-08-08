@@ -206,8 +206,15 @@ defaultButtons.test = {
 }
 
 pages.status = {
-    isEffects = false,
+    effectPage = 0,
     render = function()
+        if pages.status.effectPage == 0 then
+            pages.status.renderStatus()
+        else
+            pages.status.renderEffects()
+        end
+    end,
+    renderStatus = function()
         local toggle = true
         local y = 3
         local function setText(txt,value)
@@ -242,7 +249,7 @@ pages.status = {
         left = {
             xMin=1,xMax=1,yMin=7,yMax=8,
             render=function()
-                if pages.status.isEffects then
+                if pages.status.effectPage > 0 then
                     gpu.setBackground(0x336699)
                     gpu.setForeground(0xFFFFFF)
                 else
@@ -259,12 +266,12 @@ pages.status = {
         right = {
             xMin=50,xMax=50,yMin=7,yMax=8,
             render=function()
-                if pages.status.isEffects then
-                    gpu.setBackground(0x333333)
-                    gpu.setForeground(0xCCCCCC)
-                else
+                if pages.status.effectPage == 0 then
                     gpu.setBackground(0x336699)
                     gpu.setForeground(0xFFFFFF)
+                else
+                    gpu.setBackground(0x333333)
+                    gpu.setForeground(0xCCCCCC)
                 end
                 gpu.fill(50,7,1,1,"\\")
                 gpu.fill(50,8,1,1,"/")
