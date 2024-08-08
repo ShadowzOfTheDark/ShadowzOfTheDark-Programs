@@ -5,7 +5,6 @@
 -- Main program entry point
 
 local NC = {}
-setmetatable(NC, {__index = _G})
 
 NC.VER = "v1.1.0"
 NC.LIB_DIR = "/lib/nanocontrol/"
@@ -147,7 +146,11 @@ if command then
     local alias = aliases[command]
     if alias then command = alias end
 
-    local func = loadfile(NC.LIB_DIR.."commands/"..command..".lua",nil,NC)
+    local env = setmetatable({},{__index = _G})
+
+    env.NC = NC
+
+    local func = loadfile(NC.LIB_DIR.."commands/"..command..".lua",nil,env)
     if func then
         func(table.unpack(commandArgs))
     else
