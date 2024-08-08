@@ -4,7 +4,7 @@
 
 -- Update command
 
-print("Updating NanoControl...")
+print("Updating NanoControl "..NC.VER)
 
 package.loaded["nanocontrol/nanoGUI"] = nil
 
@@ -12,4 +12,4 @@ local shell = require("shell")
 
 shell.execute("oppm update nanocontrol")
 
-print("Update complete.")
+shell.execute("nanocontrol version")

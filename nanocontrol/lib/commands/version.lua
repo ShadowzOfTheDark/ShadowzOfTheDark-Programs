@@ -4,5 +4,10 @@
 
 -- Version command
 
-print(args)
-print("NanoControl version is currently "..NC.VER)
+local changed = ...
+
+if changed == true then
+    print("NanoControl is now version: "..NC.VER)
+else
+    print("NanoControl version: "..NC.VER)
+end
