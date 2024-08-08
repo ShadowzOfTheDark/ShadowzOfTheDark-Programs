@@ -4,7 +4,7 @@
 
 -- Update command
 
-print("Updating NanoControl "..NC.VER)
+print("Updating NanoControl: "..NC.VER)
 
 package.loaded["nanocontrol/nanoGUI"] = nil
 
