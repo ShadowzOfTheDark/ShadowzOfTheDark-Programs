@@ -239,13 +239,35 @@ pages.status = {
         setText("Experience: ",NC.dat.experience)
     end,
     buttons = {
-        {
+        left = {
             xMin=1,xMax=1,yMin=7,yMax=8,
             render=function()
-                gpu.setBackground(0x333333)
-                gpu.setForeground(0xCCCCCC)
+                if pages.status.isEffects then
+                    gpu.setBackground(0x336699)
+                    gpu.setForeground(0xFFFFFF)
+                else
+                    gpu.setBackground(0x333333)
+                    gpu.setForeground(0xCCCCCC)
+                end
                 gpu.fill(1,7,1,1,"/")
                 gpu.fill(1,8,1,1,"\\")
+            end,
+            callback = function()
+                require("computer").beep()
+            end
+        },
+        right = {
+            xMin=50,xMax=50,yMin=7,yMax=8,
+            render=function()
+                if pages.status.isEffects then
+                    gpu.setBackground(0x333333)
+                    gpu.setForeground(0xCCCCCC)
+                else
+                    gpu.setBackground(0x336699)
+                    gpu.setForeground(0xFFFFFF)
+                end
+                gpu.fill(50,7,1,1,"\\")
+                gpu.fill(50,8,1,1,"/")
             end,
             callback = function()
                 require("computer").beep()
