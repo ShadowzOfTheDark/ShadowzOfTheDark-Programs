@@ -52,12 +52,6 @@ local function drawButtons()
     for k,v in pairs(currentButtons) do
         v.render()
     end
-    local pageButtons = pages[page].buttons
-    if pageButtons then
-        for k,v in pairs(pageButtons) do
-            v.render()
-        end
-    end
 end
 
 local function drawStatusIndicator(text,back,fore)
@@ -72,6 +66,12 @@ local function drawPage()
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1,2,50,13," ")
     pages[page].render()
+    local pageButtons = pages[page].buttons
+    if pageButtons then
+        for k,info in pairs(pageButtons) do
+            info.render()
+        end
+    end
 end
 
 local function setup()
