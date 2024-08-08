@@ -31,14 +31,12 @@ local nanoGUI
 
 -- This just adds a shorthand 'nc' command with setup at boot.
 if require("rc").loaded.nanocontrol_alias == nil then
-    print("Welcome to NanoControl "..NC.VER.."!")
+    print("Welcome to NanoControl!")
     print("Adding 'nc' shorthand alias for 'nanocontrol'.")
     local shell = require("shell")
     shell.execute("rc nanocontrol_alias enable")
     shell.execute("rc nanocontrol_alias start")
     os.sleep(3)
-else
-    print("Loading NanoControl ("..NC.VER..")...")
 end
 
 -- Setting up hardware.
@@ -144,6 +142,10 @@ local command = commandArgs[1]
 if command then
     command = string.lower(command)
     table.remove(commandArgs,1)
+
+    local aliases = {ver="version"}
+    local alias = aliases[command]
+    if alias then command = alias end
 
     local func = loadfile(NC.LIB_DIR.."commands/"..command..".lua",nil,NC)
     if func then
