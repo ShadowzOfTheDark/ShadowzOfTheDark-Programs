@@ -126,7 +126,7 @@ NC.sendTime = computer.uptime()
 
 function NC.update()
     if computer.uptime() > NC.sendTime then
-        NC.sendTime = computer.uptime() + NC.Latency + timedOut and 2
+        NC.sendTime = computer.uptime() + NC.Latency + (timedOut and 2)
         if NC.address == nil or NC.dat.port == nil then
             modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
             return
