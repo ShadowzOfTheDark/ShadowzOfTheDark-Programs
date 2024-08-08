@@ -142,7 +142,7 @@ if command then
     command = string.lower(command)
     table.remove(commandArgs,1)
 
-    local aliases = {ver="version"}
+    local aliases = {ver="version",v="version",s="stop",u="update"}
     local alias = aliases[command]
     if alias then command = alias end
 

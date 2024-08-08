@@ -12,4 +12,4 @@ local shell = require("shell")
 
 shell.execute("oppm update nanocontrol")
 
-shell.execute("nanocontrol version")
+shell.execute("nanocontrol version update")

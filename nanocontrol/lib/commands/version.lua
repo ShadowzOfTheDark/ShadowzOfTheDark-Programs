@@ -4,9 +4,9 @@
 
 -- Version command
 
-local changed = ...
+local arg = {...}
 
-if changed == true then
+if arg[1] == "update" then
     print("NanoControl is now version: "..NC.VER)
 else
     print("NanoControl version: "..NC.VER)
