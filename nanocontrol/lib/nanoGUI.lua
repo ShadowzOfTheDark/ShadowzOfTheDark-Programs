@@ -52,6 +52,12 @@ local function drawButtons()
     for k,v in pairs(currentButtons) do
         v.render()
     end
+    local pageButtons = pages[page].buttons
+    if pageButtons then
+        for k,v in pairs(pageButtons) do
+            v.render()
+        end
+    end
 end
 
 local function drawStatusIndicator(text,back,fore)
@@ -200,6 +206,7 @@ defaultButtons.test = {
 }
 
 pages.status = {
+    isEffects = false,
     render = function()
         local toggle = true
         local y = 3
@@ -230,7 +237,18 @@ pages.status = {
         setText("Hunger: ",NC.dat.hunger and string.format("%.2f",NC.dat.hunger[1]))
         setText("Saturation: ",NC.dat.hunger and string.format("%.2f",NC.dat.hunger[2]))
         setText("Experience: ",NC.dat.experience)
-    end
+    end,
+    buttons = {
+        xMin=1,xMax=1,yMin=7,yMax=8,
+        render=function()
+            gpu.setBackground(0x333333)
+            gpu.setForeground(0xCCCCCC)
+            gpu.fill(1,7,1,2,"<")
+        end,
+        callback = function()
+
+        end
+    }
 }
 
 pages.profiles = {
@@ -251,6 +269,14 @@ events.touch = function(adr,x,y,button)
         for button, info in pairs(currentButtons) do
             if x >= info.xMin and x <= info.xMax and y >= info.yMin and y <= info.yMax then
                 info.callback(button)
+            end
+        end
+        local pageButtons = pages[page].buttons
+        if pageButtons then
+            for button, info in pairs(pageButtons) do
+                if x >= info.xMin and x <= info.xMax and y >= info.yMin and y <= info.yMax then
+                    info.callback(button)
+                end
             end
         end
     end
