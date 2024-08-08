@@ -54,6 +54,7 @@ elseif not modem.isWireless() then
     io.stderr:write("Detected a network card but isn't wireless. Trying anyway...\n")
 end
 modem.open(NC.CFG.port)
+modem.setStrength(NC.SV.commandRange)
 NC.modem = modem
 
 -- Communication handling
