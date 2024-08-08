@@ -6,8 +6,10 @@
 
 print("Updating NanoControl...")
 
+package.loaded["nanocontrol/nanoGUI"] = nil
+
 local shell = require("shell")
 
 shell.execute("oppm update nanocontrol")
 
-require("computer").shutdown(true)
+print("Update complete.")

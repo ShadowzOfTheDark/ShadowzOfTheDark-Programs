@@ -126,7 +126,7 @@ NC.sendTime = computer.uptime()
 
 function NC.update()
     if computer.uptime() > NC.sendTime then
-        NC.sendTime = computer.uptime() + NC.Latency
+        NC.sendTime = computer.uptime() + NC.Latency + timedOut and 2
         if NC.address == nil or NC.dat.port == nil then
             modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
             return
@@ -156,5 +156,7 @@ end
 
 nanoGUI = require("nanocontrol/nanoGUI")
 
-nanoGUI.init(NC)
+local succeed, err = nanoGUI.init(NC)
+
+if not succeed then error(err,1) end
 

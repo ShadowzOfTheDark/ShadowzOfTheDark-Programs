@@ -294,9 +294,7 @@ function nanoGUI.init(nanocontrol)
     gpu.setDepth(gpu.maxDepth())
     local succeed, err = pcall(main)
     reset()
-    if not succeed then
-        error(err)
-    end
+    return succeed, err
 end
 
 nanoGUI.drawStatusIndicator = drawStatusIndicator
