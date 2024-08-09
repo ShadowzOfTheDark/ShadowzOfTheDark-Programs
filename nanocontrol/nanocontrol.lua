@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.13"
+NC.VER = "v0.1.14"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -117,8 +117,8 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
             end
         end
     elseif verify(port,dist,delimiter) then
-        verified = true
         if title == "port" and args[1] == NC.CFG.port then
+            verified = true
             NC.address = adr
             computer.beep(1000,0.25)
             if nanoGUI then
