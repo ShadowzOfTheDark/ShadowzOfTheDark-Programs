@@ -62,7 +62,7 @@ local function drawStatusIndicator(text,back,fore)
     gpu.set(49-#text,16,text)
 end
 
-local function drawPage()
+function NC.drawPage()
     gpu.setBackground(0x000000)
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1,2,50,13," ")
@@ -81,7 +81,7 @@ local function setup()
     gpu.setActiveBuffer(buffer)
     drawTitle()
     drawButtons()
-    drawPage()
+    NC.drawPage()
     drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
     gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
@@ -111,7 +111,7 @@ defaultButtons.exit = {
         gpu.fill(49,1,1,1,"X")
     end,
     callback=function()
-        NC.disconnect()
+        running = false
     end
 }
 
@@ -130,7 +130,7 @@ defaultButtons.disconnect = {
     xMin=38,xMax=50,yMin=16,yMax=16,
     render=function() end,
     callback=function()
-        
+        NC.disconnect()
     end
 }
 
@@ -347,7 +347,7 @@ local function main()
         end
         if not running then break end
         NC.update()
-        if nanoGUI.updateScreen then drawPage() end
+        if nanoGUI.updateScreen then NC.drawPage() end
         if updateButtons then drawButtons() end
         pushBuffer()
     end
