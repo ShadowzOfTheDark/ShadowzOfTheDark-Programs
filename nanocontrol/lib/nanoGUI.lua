@@ -217,6 +217,8 @@ pages.status = {
             pages.status.renderEffects()
         end
     end,
+    renderEffects = function()
+    end,
     renderStatus = function()
         local toggle = true
         local y = 3
