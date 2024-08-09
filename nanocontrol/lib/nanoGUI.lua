@@ -228,16 +228,20 @@ pages.status = {
         end
     end,
     renderEffects = function()
-        gpu.setForeground(0xFFFFFF)
-        gpu.set(3,3,"Current Effects:")
         local effects = NC.dat.effects
+        if effects then
+            gpu.setForeground(0xFFFFFF)
+        else
+            gpu.setForeground(0x333333)
+        end
+        gpu.set(3,3,"Current Effects:")
         if effects ~= nil then
             local start = 1+(pages.status.effectPage-1)*11
             local y = 4
             for i=start,start+10 do
                 local effect = effects[i]
                 if effect then
-                    gpu.set(3,y,effect)
+                    gpu.set(3,y,"> "..effect)
                 else
                     break
                 end
