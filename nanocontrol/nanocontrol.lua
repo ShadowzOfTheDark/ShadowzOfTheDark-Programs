@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.16"
+NC.VER = "v0.1.17"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -143,7 +143,7 @@ end
 NC.sendTime = computer.uptime()
 
 function NC.send(buffer,title,response,callback,...)
-    if NC.connected then
+    if NC.connected() then
         if buffer then
             table.insert(pendingRequests,table.pack(title,response,callback,...))
         else

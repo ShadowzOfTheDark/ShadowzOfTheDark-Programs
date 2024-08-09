@@ -218,7 +218,7 @@ pages.status = {
     effectPage = 0,
     render = function()
         gpu.setBackground(0x000000)
-        if not NC.connected then
+        if not NC.connected() then
             pages.status.effectPage = 0
         end
         if pages.status.effectPage == 0 then
@@ -300,7 +300,7 @@ pages.status = {
         right = {
             xMin=50,xMax=50,yMin=7,yMax=8,
             render=function()
-                if pages.status.effectPage == 0 and NC.connected then
+                if pages.status.effectPage == 0 and NC.connected() then
                     gpu.setBackground(0x336699)
                     gpu.setForeground(0xFFFFFF)
                 else
