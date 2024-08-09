@@ -52,6 +52,12 @@ local function drawButtons()
     for k,v in pairs(currentButtons) do
         v.render()
     end
+    local pageButtons = pages[page].buttons
+    if pageButtons then
+        for k,info in pairs(pageButtons) do
+            info.render()
+        end
+    end
 end
 
 local function drawStatusIndicator(text,back,fore)
@@ -66,12 +72,6 @@ local function drawPage()
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1,2,50,13," ")
     pages[page].render()
-    local pageButtons = pages[page].buttons
-    if pageButtons then
-        for k,info in pairs(pageButtons) do
-            info.render()
-        end
-    end
 end
 
 local function setup()
@@ -208,6 +208,9 @@ defaultButtons.test = {
 pages.status = {
     effectPage = 0,
     render = function()
+        if not NC.connected then
+            pages.status.effectPage = 0
+        end
         if pages.status.effectPage == 0 then
             pages.status.renderStatus()
         else
@@ -260,13 +263,16 @@ pages.status = {
                 gpu.fill(1,8,1,1,"\\")
             end,
             callback = function()
-                require("computer").beep()
+                if pages.status.effectPage > 0 then
+                    pages.status.effectPage = math.max(0,pages.status.effectPage - 1)
+                end
+                updateButtons = true
             end
         },
         right = {
             xMin=50,xMax=50,yMin=7,yMax=8,
             render=function()
-                if pages.status.effectPage == 0 then
+                if pages.status.effectPage == 0 and NC.connected then
                     gpu.setBackground(0x336699)
                     gpu.setForeground(0xFFFFFF)
                 else
@@ -277,7 +283,10 @@ pages.status = {
                 gpu.fill(50,8,1,1,"/")
             end,
             callback = function()
-                require("computer").beep()
+                if pages.status.effectPage == 0 then
+                    pages.status.effectPage = math.min(1,pages.status.effectPage + 1)
+                end
+                updateButtons = true
             end
         }
     }

@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.2"
+NC.VER = "v0.1.3"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -22,7 +22,7 @@ NC.SV.triggerQuota = 0.4
 
 NC.CFG = {}
 NC.CFG.port = 17061
-NC.CFG.timeout = 3 -- Time in seconds for nano connection to timeout.
+NC.CFG.timeout = 6 -- Time in seconds for nano connection to timeout.
 
 NC.Latency = NC.SV.commandDelay + 0.1
 
@@ -70,6 +70,8 @@ local queries = {"getTotalInputCount","getPowerState","getName","getAge","getHea
 local numQueries = #queries
 local queryIndex = 0
 
+local pendingRequests = {}
+
 local timeoutTime = computer.uptime()
 local timedOut = true
 
@@ -92,11 +94,24 @@ local function updateResponse(set)
     end
 end
 
+function NC.connected()
+    return NC.address ~= nil and NC.dat.port ~= nil
+end
+
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
     local args = table.pack(...)
     if NC.address and verifyAdr(adr,port,dist,delimiter) then
         verified = true
+        for k,v in ipairs(pendingRequests) do
+            if v[2] == title then
+                local callback = v[3]
+                for i=1,3 do table.remove(v,1) end
+                callback(table.unpack(v))
+                table.remove(pendingRequests,k)
+                break
+            end
+        end
     elseif verify(port,dist,delimiter) then
         verified = true
         if title == "port" and args[1] == NC.CFG.port then
@@ -121,15 +136,44 @@ end
 
 NC.sendTime = computer.uptime()
 
+function NC.send(buffer,title,response,callback,...)
+    if NC.connected then
+        if buffer then
+            table.insert(pendingRequests,table.pack(title,response,callback,...))
+        else
+            for k,v in ipairs(pendingRequests) do
+                if v[1] == title then
+                    return false
+                end
+            end
+            table.insert(pendingRequests,table.pack(title,response,callback,...))
+        end
+    end
+    return false
+end
+
 function NC.update()
     if computer.uptime() > NC.sendTime then
         NC.sendTime = computer.uptime() + NC.Latency * (timedOut and 2 or 1)
         if NC.address == nil or NC.dat.port == nil then
             modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
             return
+        elseif #pendingRequests > 1 then
+            local request = pendingRequests[1]
+            local args = {}
+            for k,v in ipairs(request) do
+                if k > 3 then
+                    table.insert(args,v)
+                end
+            end
+            modem.send(NC.address,NC.CFG.port,"nanomachines",request[1],table.unpack(args))
+        else
+            modem.send(NC.address,NC.CFG.port,"nanomachines",queries[queryIndex+1])
+            queryIndex = (queryIndex + 1) % numQueries
         end
-        modem.send(NC.address,NC.CFG.port,"nanomachines",queries[queryIndex+1])
-        queryIndex = (queryIndex + 1) % numQueries
+        if nanoGUI then
+            nanoGUI.updateScreen = true
+        end
     end
     updateResponse()
 end
