@@ -52,12 +52,6 @@ local function drawButtons()
     for k,v in pairs(currentButtons) do
         v.render()
     end
-    local pageButtons = pages[page].buttons
-    if pageButtons then
-        for k,info in pairs(pageButtons) do
-            info.render()
-        end
-    end
     updateButtons = false
 end
 
@@ -73,6 +67,12 @@ local function drawPage()
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1,2,50,13," ")
     pages[page].render()
+    local pageButtons = pages[page].buttons
+    if pageButtons then
+        for k,info in pairs(pageButtons) do
+            info.render()
+        end
+    end
 end
 
 local function setup()
@@ -269,7 +269,7 @@ pages.status = {
                 if pages.status.effectPage > 0 then
                     pages.status.effectPage = math.max(0,pages.status.effectPage - 1)
                 end
-                updateButtons = true
+                nanoGUI.updateScreen = true
             end
         },
         right = {
@@ -289,7 +289,7 @@ pages.status = {
                 if pages.status.effectPage == 0 then
                     pages.status.effectPage = math.min(1,pages.status.effectPage + 1)
                 end
-                updateButtons = true
+                nanoGUI.updateScreen = true
             end
         }
     }
