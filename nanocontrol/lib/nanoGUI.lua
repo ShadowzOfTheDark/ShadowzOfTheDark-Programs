@@ -338,8 +338,8 @@ local function main()
         end
         if not running then break end
         NC.update()
-        if updateButtons then drawButtons() end
         if nanoGUI.updateScreen then drawPage() end
+        if updateButtons then drawButtons() end
         pushBuffer()
     end
 end
