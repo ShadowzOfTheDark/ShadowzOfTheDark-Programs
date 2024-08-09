@@ -157,16 +157,18 @@ function NC.send(buffer,title,response,callback,...)
 end
 
 function NC.disconnect()
-    timedOut = true
-    NC.dat = {}
-    NC.address = nil
-    queryIndex = 0
-    if nanoGUI then
-        nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
-        nanoGUI.drawPage()
+    if NC.connected then
+        NC.dat = {}
+        NC.address = nil
+        queryIndex = 0
+        if nanoGUI then
+            nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
+            nanoGUI.drawPage()
+        end
+        computer.beep(500,0.25)
+        updateSendTime()
+        timedOut = true
     end
-    computer.beep(500,0.25)
-    updateSendTime()
 end
 
 function NC.update()
