@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.8"
+NC.VER = "v0.1.9"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.

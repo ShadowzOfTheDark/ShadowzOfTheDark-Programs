@@ -126,6 +126,14 @@ defaultButtons.stop = {
     end
 }
 
+defaultButtons.disconnect = {
+    xMin=38,xMax=49,yMin=16,yMax=16,
+    render=function() end,
+    callback=function()
+        computer.beep()
+    end
+}
+
 defaultButtons.status = {
     xMin=2,xMax=9,yMin=16,yMax=16,
     render = function()
