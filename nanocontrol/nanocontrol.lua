@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.21"
+NC.VER = "v0.1.22"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -103,9 +103,8 @@ function NC.connected()
 end
 
 local function parseEffects(effects)
-    effects = string.gsub(effects,"[{}]","")
     local t = {}
-    for str in string.gmatch(effects, "([,]+)") do
+    for str in string.gmatch(string.gsub(effects,"[{}]",""), "([^,]+)") do
         table.insert(t,str)
     end
     return t
