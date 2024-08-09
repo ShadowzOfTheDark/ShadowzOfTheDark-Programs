@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.15"
+NC.VER = "v0.1.16"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -110,8 +110,10 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
         for k,v in ipairs(pendingRequests) do
             if v[2] == title then
                 local callback = v[3]
-                for i=1,3 do table.remove(v,1) end
-                callback(table.unpack(v))
+                if callback then
+                    for i=1,3 do table.remove(v,1) end
+                    callback(table.unpack(v))
+                end
                 table.remove(pendingRequests,k)
                 break
             end

@@ -313,6 +313,7 @@ pages.status = {
             callback = function()
                 if pages.status.effectPage == 0 then
                     pages.status.effectPage = math.min(1,pages.status.effectPage + 1)
+                    NC.send(false,"getActiveEffects","effects")
                 end
                 nanoGUI.updateScreen = true
             end
