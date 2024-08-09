@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.18"
+NC.VER = "v0.1.19"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -102,12 +102,17 @@ function NC.connected()
     return NC.address ~= nil and NC.dat.port ~= nil
 end
 
+local serialization = require("serialization")
+
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
     local args = table.pack(...)
     if NC.connected() and verifyAdr(adr,port,dist,delimiter) then
         verified = true
         for k,v in ipairs(pendingRequests) do
+            if title == "effects" then
+                args[1] = serialization.unserialize(args[1])
+            end
             if v[2] == title then
                 local callback = v[3]
                 if callback then
