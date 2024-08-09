@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.12"
+NC.VER = "v0.1.13"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -94,6 +94,10 @@ local function updateResponse(set)
     end
 end
 
+local function updateSendTime()
+    NC.sendTime = computer.uptime() + NC.Latency * (timedOut and 2 or 1)
+end
+
 function NC.connected()
     return NC.address ~= nil and NC.dat.port ~= nil
 end
@@ -101,7 +105,7 @@ end
 function NC.modem_message(_,adr,port,dist,delimiter,title,...)
     local verified = false
     local args = table.pack(...)
-    if NC.address and verifyAdr(adr,port,dist,delimiter) then
+    if NC.connected() and verifyAdr(adr,port,dist,delimiter) then
         verified = true
         for k,v in ipairs(pendingRequests) do
             if v[2] == title then
@@ -162,12 +166,13 @@ function NC.disconnect()
         nanoGUI.drawPage()
     end
     computer.beep(500,0.25)
+    updateSendTime()
 end
 
 function NC.update()
     if computer.uptime() > NC.sendTime then
-        NC.sendTime = computer.uptime() + NC.Latency * (timedOut and 2 or 1)
-        if NC.address == nil or NC.dat.port == nil then
+        updateSendTime()
+        if not NC.connected() then
             modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
             return
         elseif #pendingRequests > 1 then
