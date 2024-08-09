@@ -217,6 +217,7 @@ defaultButtons.test = {
 pages.status = {
     effectPage = 0,
     render = function()
+        gpu.setBackground(0x000000)
         if not NC.connected then
             pages.status.effectPage = 0
         end
@@ -227,6 +228,22 @@ pages.status = {
         end
     end,
     renderEffects = function()
+        gpu.setForeground(0xFFFFFF)
+        gpu.set(3,3,"Current Effects:")
+        local effects = NC.dat.effects
+        if effects ~= nil then
+            local start = pages.status.effectPage*11
+            local y = 4
+            for i=start,start+10 do
+                local effect = effects[i]
+                if effect then
+                    gpu.set(3,y,effect)
+                else
+                    break
+                end
+                y = y + 1
+            end
+        end
     end,
     renderStatus = function()
         local toggle = true

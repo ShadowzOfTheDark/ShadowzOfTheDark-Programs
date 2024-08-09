@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.14"
+NC.VER = "v0.1.15"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -157,7 +157,7 @@ function NC.send(buffer,title,response,callback,...)
 end
 
 function NC.disconnect()
-    if NC.connected then
+    if NC.connected() then
         NC.dat = {}
         NC.address = nil
         queryIndex = 0
