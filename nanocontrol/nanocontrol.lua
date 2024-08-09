@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.9"
+NC.VER = "v0.1.10"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -150,6 +150,18 @@ function NC.send(buffer,title,response,callback,...)
         end
     end
     return false
+end
+
+function NC.disconnect()
+    timedOut = true
+    NC.dat = {}
+    NC.address = nil
+    queryIndex = 0
+    if nanoGUI then
+        nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
+        nanoGUI.updateScreen = true
+    end
+    computer.beep(500,0.25)
 end
 
 function NC.update()

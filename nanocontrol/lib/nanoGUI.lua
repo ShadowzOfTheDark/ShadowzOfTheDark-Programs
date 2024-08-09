@@ -111,7 +111,7 @@ defaultButtons.exit = {
         gpu.fill(49,1,1,1,"X")
     end,
     callback=function()
-        running = false
+        NC.disconnect()
     end
 }
 
@@ -127,10 +127,10 @@ defaultButtons.stop = {
 }
 
 defaultButtons.disconnect = {
-    xMin=38,xMax=49,yMin=16,yMax=16,
+    xMin=38,xMax=50,yMin=16,yMax=16,
     render=function() end,
     callback=function()
-        computer.beep()
+        
     end
 }
 
