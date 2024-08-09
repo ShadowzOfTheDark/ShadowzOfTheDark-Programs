@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.17"
+NC.VER = "v0.1.18"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -179,7 +179,7 @@ function NC.update()
         if not NC.connected() then
             modem.broadcast(NC.CFG.port,"nanomachines","setResponsePort",NC.CFG.port)
             return
-        elseif #pendingRequests > 1 then
+        elseif #pendingRequests > 0 then
             local request = pendingRequests[1]
             local args = {}
             for k,v in ipairs(request) do

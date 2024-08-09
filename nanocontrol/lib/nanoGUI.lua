@@ -232,7 +232,7 @@ pages.status = {
         gpu.set(3,3,"Current Effects:")
         local effects = NC.dat.effects
         if effects ~= nil then
-            local start = pages.status.effectPage*11
+            local start = 1+(pages.status.effectPage-1)*11
             local y = 4
             for i=start,start+10 do
                 local effect = effects[i]
