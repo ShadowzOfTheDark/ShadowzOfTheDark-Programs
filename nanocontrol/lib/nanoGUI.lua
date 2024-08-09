@@ -62,7 +62,7 @@ local function drawStatusIndicator(text,back,fore)
     gpu.set(49-#text,16,text)
 end
 
-function NC.drawPage()
+function nanoGUI.drawPage()
     gpu.setBackground(0x000000)
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1,2,50,13," ")
@@ -81,7 +81,7 @@ local function setup()
     gpu.setActiveBuffer(buffer)
     drawTitle()
     drawButtons()
-    NC.drawPage()
+    nanoGUI.drawPage()
     drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
     gpu.setActiveBuffer(0)
     gpu.setResolution(50,16)
@@ -347,7 +347,7 @@ local function main()
         end
         if not running then break end
         NC.update()
-        if nanoGUI.updateScreen then NC.drawPage() end
+        if nanoGUI.updateScreen then nanoGUI.drawPage() end
         if updateButtons then drawButtons() end
         pushBuffer()
     end

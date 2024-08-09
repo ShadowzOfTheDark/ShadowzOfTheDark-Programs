@@ -6,7 +6,7 @@
 
 local NC = {}
 
-NC.VER = "v0.1.11"
+NC.VER = "v0.1.12"
 NC.LIB_DIR = "/lib/nanocontrol/"
 
 -- This is the default server config values for the nanomachines.
@@ -87,7 +87,7 @@ local function updateResponse(set)
             queryIndex = 0
             if nanoGUI then
                 nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
-                NC.drawPage()
+                nanoGUI.drawPage()
             end
             computer.beep(500,0.25)
         end
@@ -129,7 +129,7 @@ function NC.modem_message(_,adr,port,dist,delimiter,title,...)
         NC.dat[title] = args[1]
     end
     if nanoGUI then
-        NC.drawPage()
+        nanoGUI.drawPage()
     end
     updateResponse(true)
 end
@@ -159,7 +159,7 @@ function NC.disconnect()
     queryIndex = 0
     if nanoGUI then
         nanoGUI.drawStatusIndicator("Searching",0xFF3333,0xFFFFFF)
-        NC.drawPage()
+        nanoGUI.drawPage()
     end
     computer.beep(500,0.25)
 end
@@ -184,7 +184,7 @@ function NC.update()
             queryIndex = (queryIndex + 1) % numQueries
         end
         if nanoGUI then
-            NC.drawPage()
+            nanoGUI.drawPage()
         end
     end
     updateResponse()
