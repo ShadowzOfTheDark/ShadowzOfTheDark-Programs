@@ -15,7 +15,7 @@ local oldScreen
 local buffer
 local running = false
 local page = "status"
-local updateButtons = false
+local updateButtons = true
 nanoGUI.updateScreen = false
 
 local events = {}
@@ -58,6 +58,7 @@ local function drawButtons()
             info.render()
         end
     end
+    updateButtons = false
 end
 
 local function drawStatusIndicator(text,back,fore)
